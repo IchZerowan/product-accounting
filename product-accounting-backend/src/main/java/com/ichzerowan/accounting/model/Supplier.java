@@ -6,29 +6,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Product {
+public class Supplier {
     @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private String description;
-    private double price;
+    private String phone;
     private boolean archived;
 
-    public Product() { }
+    public Supplier() { }
 
-    public Product(String name, String description, double price) {
+    public Supplier(String name, String phone) {
         this.name = name;
-        this.description = description;
-        this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.phone = phone;
     }
 
     public Long getId() {
@@ -39,20 +29,20 @@ public class Product {
         this.id = id;
     }
 
-    public double getPrice() {
-        return price;
+    public String getName() {
+        return name;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public boolean isArchived() {

@@ -1,6 +1,6 @@
 package com.ichzerowan.accounting.controller;
 
-import com.ichzerowan.accounting.dao.ProductNotFoundException;
+import com.ichzerowan.accounting.dao.ObjectNotFoundException;
 import com.ichzerowan.accounting.dao.ProductRepository;
 import com.ichzerowan.accounting.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ class ProductController {
     @GetMapping("/{id}")
     Product getProduct(@PathVariable Long id){
         return repository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException(id));
+                .orElseThrow(() -> new ObjectNotFoundException(Product.class, id));
     }
 
     @PostMapping("")
@@ -43,7 +43,7 @@ class ProductController {
             product.setDescription(newProduct.getDescription());
             product.setPrice(newProduct.getPrice());
             return repository.save(product);
-        }).orElseThrow(() -> new ProductNotFoundException(id));
+        }).orElseThrow(() -> new ObjectNotFoundException(Product.class, id));
     }
 
     @DeleteMapping("/{id}")
@@ -51,6 +51,6 @@ class ProductController {
         return repository.findById(id).map(product -> {
             product.setArchived(true);
             return repository.save(product);
-        }).orElseThrow(() -> new ProductNotFoundException(id));
+        }).orElseThrow(() -> new ObjectNotFoundException(Product.class, id));
     }
 }
