@@ -1,5 +1,7 @@
 package com.ichzerowan.accounting.model;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private boolean archived;
 
     public Product() { }
 
@@ -52,5 +55,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }

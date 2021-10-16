@@ -17,7 +17,12 @@ class ProductController {
 
     @GetMapping("")
     List<Product> getAll(){
-        return repository.findAll();
+        return repository.findByArchived(false);
+    }
+
+    @GetMapping("/archived")
+    List<Product> getArchived(){
+        return repository.findByArchived(true);
     }
 
     @GetMapping("/{id}")
@@ -42,7 +47,10 @@ class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    void deleteProduct(@PathVariable Long id){
-        repository.deleteById(id);
+    Product deleteProduct(@PathVariable Long id){
+        return repository.findById(id).map(product -> {
+            product.setArchived(true);
+            return repository.save(product);
+        }).orElseThrow(() -> new ProductNotFoundException(id));
     }
 }
