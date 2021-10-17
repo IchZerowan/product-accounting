@@ -40,7 +40,7 @@ public class DeliveryController {
     Delivery addDelivery(@RequestBody DeliveryDto deliveryDto){
         Supplier supplier = supplierRepository.findById(deliveryDto.getSupplierId())
                 .orElseThrow(() -> new ObjectNotFoundException(Supplier.class, deliveryDto.getSupplierId()));
-        Delivery newDelivery = new Delivery(deliveryDto.getDate(), supplier);
+        Delivery newDelivery = new Delivery(deliveryDto.getDate(), deliveryDto.getShippingCost(), supplier);
         return repository.save(newDelivery);
     }
 
@@ -50,6 +50,7 @@ public class DeliveryController {
             Supplier supplier = supplierRepository.findById(deliveryDto.getSupplierId())
                     .orElseThrow(() -> new ObjectNotFoundException(Supplier.class, deliveryDto.getSupplierId()));
             delivery.setDate(deliveryDto.getDate());
+            delivery.setShippingCost(deliveryDto.getShippingCost());
             delivery.setSupplier(supplier);
             return repository.save(delivery);
         }).orElseThrow(() -> new ObjectNotFoundException(Delivery.class, id));

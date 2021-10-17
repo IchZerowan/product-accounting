@@ -74,7 +74,8 @@ database
 ```json
 {
     "supplierId": 1,
-    "date": "2021-11-15"
+    "date": "2021-11-15",
+    "shippingCost": 12.3
 }
 ```
 

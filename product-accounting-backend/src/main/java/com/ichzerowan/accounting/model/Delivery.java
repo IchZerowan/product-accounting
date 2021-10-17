@@ -13,6 +13,7 @@ public class Delivery {
     private Long id;
 
     private LocalDate date;
+    private double shippingCost;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
@@ -24,8 +25,9 @@ public class Delivery {
 
     public Delivery() { }
 
-    public Delivery(LocalDate date, Supplier supplier) {
+    public Delivery(LocalDate date, double shippingCost, Supplier supplier) {
         this.date = date;
+        this.shippingCost = shippingCost;
         this.supplier = supplier;
         this.products = new ArrayList<>();
     }
@@ -60,5 +62,13 @@ public class Delivery {
 
     public void setProducts(List<DeliveryProduct> products) {
         this.products = products;
+    }
+
+    public double getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(double shippingCost) {
+        this.shippingCost = shippingCost;
     }
 }

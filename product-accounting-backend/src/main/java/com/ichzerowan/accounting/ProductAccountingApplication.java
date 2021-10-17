@@ -16,9 +16,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 @SpringBootApplication
 public class ProductAccountingApplication {
@@ -52,7 +50,7 @@ public class ProductAccountingApplication {
 			Supplier supplier = new Supplier("Bakery A ltd.", "+380999999999");
 			supplierRepository.save(supplier);
 
-			Delivery delivery = new Delivery(LocalDate.parse("2017-11-15"), supplier);
+			Delivery delivery = new Delivery(LocalDate.parse("2017-11-15"), 10, supplier);
 
 			DeliveryProduct deliveryProduct1 = new DeliveryProduct(delivery, product1, 10);
 			DeliveryProduct deliveryProduct2 = new DeliveryProduct(delivery, product2, 20);
