@@ -18,12 +18,14 @@ public class DeliveryProduct {
 
     private int count;
 
+    private double price;
+
     public DeliveryProduct() { }
 
     public DeliveryProduct(Delivery delivery, Product product, int count){
         this.delivery = delivery;
         this.product = product;
-        this.count = count;
+        setCount(count);
     }
 
     public Delivery getDelivery() {
@@ -40,6 +42,7 @@ public class DeliveryProduct {
 
     public void setCount(int count) {
         this.count = count;
+        this.price = count * product.getPriceWholesale();
     }
 
     public Product getProduct() {
@@ -48,5 +51,9 @@ public class DeliveryProduct {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }

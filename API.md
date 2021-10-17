@@ -59,7 +59,8 @@ database
         "products": [
             {
                 "product": { ... },
-                "count": 20
+                "count": 20,
+                "price": 120.0 // auto-calculated
             }
         ]
     }
