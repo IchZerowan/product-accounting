@@ -12,15 +12,17 @@ public class Product {
 
     private String name;
     private String description;
-    private double price;
+    private double priceRetail;
+    private double priceWholesale;
     private boolean archived;
 
     public Product() { }
 
-    public Product(String name, String description, double price) {
+    public Product(String name, String description, double priceRetail, double priceWholesale) {
         this.name = name;
         this.description = description;
-        this.price = price;
+        this.priceRetail = priceRetail;
+        this.priceWholesale = priceWholesale;
     }
 
     public String getName() {
@@ -39,14 +41,6 @@ public class Product {
         this.id = id;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -61,5 +55,21 @@ public class Product {
 
     public void setArchived(boolean archived) {
         this.archived = archived;
+    }
+
+    public double getPriceRetail() {
+        return priceRetail;
+    }
+
+    public void setPriceRetail(double priceRetail) {
+        this.priceRetail = priceRetail;
+    }
+
+    public double getPriceWholesale() {
+        return priceWholesale;
+    }
+
+    public void setPriceWholesale(double priceWholesale) {
+        this.priceWholesale = priceWholesale;
     }
 }

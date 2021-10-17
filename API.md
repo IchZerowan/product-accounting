@@ -10,7 +10,8 @@ Represents a single product in the database
     "id": 2,
     "name": "Sugar",
     "description": "A must-have component for any meal",
-    "price": 5.0,
+    "priceRetail": 5.0,
+    "priceWholesale": 3.0,
     "archived": false
 }
 ```

@@ -41,7 +41,8 @@ class ProductController {
         return repository.findById(id).map(product -> {
             product.setName(newProduct.getName());
             product.setDescription(newProduct.getDescription());
-            product.setPrice(newProduct.getPrice());
+            product.setPriceRetail(newProduct.getPriceRetail());
+            product.setPriceWholesale(newProduct.getPriceWholesale());
             return repository.save(product);
         }).orElseThrow(() -> new ObjectNotFoundException(Product.class, id));
     }

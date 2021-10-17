@@ -44,8 +44,8 @@ public class ProductAccountingApplication {
 	@Bean
 	CommandLineRunner initDeliveries(){
 		return args -> {
-			Product product1 = new Product("Biscuits", "Just some pretty biscuits", 16);
-			Product product2 = new Product("Sugar", "A must-have component for any meal", 5);
+			Product product1 = new Product("Biscuits", "Just some pretty biscuits", 16, 12);
+			Product product2 = new Product("Sugar", "A must-have component for any meal", 5, 3);
 			productRepository.save(product1);
 			productRepository.save(product2);
 
