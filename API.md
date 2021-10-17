@@ -69,6 +69,15 @@ database
 * GET /deliveries - list all deliveries
 * GET /deliveries/{id} - get delivery details by id
 * POST /deliveries - add new delivery
+
+### JSON Schema
+```json
+{
+    "supplierId": 1,
+    "date": "2021-11-15"
+}
+```
+
 * PUT /deliveries/{id} - update existing delivery
 * DELETE /deliveries/{id} - delete delivery by id
 * POST /deliveries/{deliveryId}/products - add new product item to the delivery
