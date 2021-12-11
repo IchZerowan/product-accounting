@@ -1,5 +1,6 @@
 package com.ichzerowan.accounting.controller;
 
+import com.ichzerowan.accounting.dao.ModificationNotAllowedException;
 import com.ichzerowan.accounting.dao.ObjectNotFoundException;
 import com.ichzerowan.accounting.model.ExceptionInfo;
 import org.springframework.http.HttpStatus;
@@ -19,4 +20,12 @@ public class DefaultExceptionHandler {
     ExceptionInfo handleNotFound(HttpServletRequest req, Exception ex) {
         return new ExceptionInfo(404, ex);
     }
+
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(ModificationNotAllowedException.class)
+    @ResponseBody
+    ExceptionInfo handleNotAllowed(HttpServletRequest req, Exception ex) {
+        return new ExceptionInfo(405, ex);
+    }
+
 }
