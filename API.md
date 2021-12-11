@@ -45,6 +45,37 @@ Represents a single delivery source in the database
 * PUT /suppliers/{id} - update existing supplier
 * DELETE /suppliers/{id} - archive supplier by id
 
+## Coupon
+Represents a coupon code for the purchase discounts
+
+### JSON Schema
+
+```json
+{
+    "id": 1,
+    "code": "helloworld",
+    "amount": 10.0,
+    "count": 15,
+    "archived": false
+}
+```
+
+* GET /coupons - list all unarchived coupons
+* GET /coupons/archived - list all archived coupons
+* GET /coupons/{id} - get coupon details by id
+* POST /coupons - add new coupon
+* PUT /coupons/{id}/add - add certain count of existing coupon
+
+### JSON Schema
+
+```json
+{
+    "count": 8
+}
+```
+
+* DELETE /coupons/{id} - archive coupon by id
+
 ## Delivery
 Represents a single delivery with different amounts of different products in the 
 database

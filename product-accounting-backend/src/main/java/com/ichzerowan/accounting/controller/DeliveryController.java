@@ -31,7 +31,6 @@ public class DeliveryController {
     private TransactionRepository transactionRepository;
 
     @GetMapping("")
-    @Transactional
     List<Delivery> getAll(){
         return repository.findAll();
     }
@@ -66,6 +65,7 @@ public class DeliveryController {
         }).orElseThrow(() -> new ObjectNotFoundException(Delivery.class, id));
     }
 
+    @Transactional
     @PutMapping("/{id}/commit")
     Delivery commitDelivery(@PathVariable Long id){
         return repository.findById(id).map(delivery -> {

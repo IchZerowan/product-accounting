@@ -30,7 +30,6 @@ public class PurchaseController {
     private TransactionRepository transactionRepository;
 
     @GetMapping("")
-    @Transactional
     List<Purchase> getAll(){
         return repository.findAll();
     }
