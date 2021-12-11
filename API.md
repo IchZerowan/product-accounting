@@ -96,3 +96,55 @@ database
 in the specified delivery
 * DELETE /deliveries/{deliveryId}/products/{productId} - deletes the product 
 item in the specified delivery
+
+## Purchase
+Represents a single purchase with different amounts of different products in the 
+database
+
+### JSON Schema
+
+```json
+[
+    {
+        "id": 1,
+        "date": "2017-11-15",
+        "products": [
+            {
+                "product": { ... },
+                "count": 20,
+                "price": 120.0 // auto-calculated
+            }
+        ]
+    }
+]
+```
+
+* GET /purchases - list all purchases
+* GET /purchases/{id} - get purchase details by id
+* POST /purchases - add new purchase
+
+### JSON Schema
+```json
+{
+    "supplierId": 1,
+    "date": "2021-11-15",
+    "shippingCost": 12.3
+}
+```
+
+* PUT /purchases/{id} - update existing purchase
+* DELETE /purchases/{id} - delete purchase by id
+* POST /purchases/{purchaseId}/products - add new product item to the purchase
+
+### JSON Schema
+```json
+{
+    "productId": 3,
+    "count": 4
+}
+```
+
+* PUT /purchases/{purchaseId}/products/{productId} - modifies the product item
+in the specified purchase
+* DELETE /purchases/{purchaseId}/products/{productId} - deletes the product 
+item in the specified purchase
