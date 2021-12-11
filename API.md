@@ -83,6 +83,8 @@ database
 ```
 
 * PUT /deliveries/{id} - update existing delivery
+* PUT /deliveries/{id}/commit - commit the delivery. During this action the 
+product count is updated and the Transaction entity is created
 * DELETE /deliveries/{id} - delete delivery by id
 * POST /deliveries/{deliveryId}/products - add new product item to the delivery
 
@@ -135,6 +137,8 @@ database
 ```
 
 * PUT /purchases/{id} - update existing purchase
+* PUT /purchases/{id}/commit - commit the purchase. During this action the 
+product count is updated and the Transaction entity is created
 * DELETE /purchases/{id} - delete purchase by id
 * POST /purchases/{purchaseId}/products - add new product item to the purchase
 
@@ -150,3 +154,20 @@ database
 in the specified purchase
 * DELETE /purchases/{purchaseId}/products/{productId} - deletes the product 
 item in the specified purchase
+
+## Transaction
+
+Represents a single committed financial transaction. Used mostly for logging and
+statistics
+
+### JSON Schema
+```json
+{
+    "type": "DELIVERY", // or "PURCHASE"
+    "relId": 1, // corresponding delivery or purchase id
+    "amount": -12.1,
+    "date": "2021-12-11"
+}
+```
+
+* GET /transactions - list all transactions
