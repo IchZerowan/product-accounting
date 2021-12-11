@@ -1,6 +1,7 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.delivery;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ichzerowan.accounting.model.supplier.Supplier;
 
 import javax.persistence.*;
 import java.time.LocalDate;

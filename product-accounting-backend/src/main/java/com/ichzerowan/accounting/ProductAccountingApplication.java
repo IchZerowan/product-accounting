@@ -4,10 +4,6 @@ import com.ichzerowan.accounting.dao.DeliveryProductRepository;
 import com.ichzerowan.accounting.dao.DeliveryRepository;
 import com.ichzerowan.accounting.dao.ProductRepository;
 import com.ichzerowan.accounting.dao.SupplierRepository;
-import com.ichzerowan.accounting.model.Delivery;
-import com.ichzerowan.accounting.model.DeliveryProduct;
-import com.ichzerowan.accounting.model.Product;
-import com.ichzerowan.accounting.model.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.time.LocalDate;
 
 @SpringBootApplication
 public class ProductAccountingApplication {

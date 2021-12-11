@@ -1,4 +1,6 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.delivery;
+
+import com.ichzerowan.accounting.model.product.Product;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.transaction;
 
 import javax.persistence.*;
 import java.time.LocalDate;

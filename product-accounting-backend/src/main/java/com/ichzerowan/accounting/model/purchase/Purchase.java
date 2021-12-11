@@ -1,4 +1,4 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.purchase;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

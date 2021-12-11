@@ -1,7 +1,9 @@
 package com.ichzerowan.accounting.controller;
 
 import com.ichzerowan.accounting.dao.*;
-import com.ichzerowan.accounting.model.*;
+import com.ichzerowan.accounting.model.product.Product;
+import com.ichzerowan.accounting.model.purchase.*;
+import com.ichzerowan.accounting.model.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

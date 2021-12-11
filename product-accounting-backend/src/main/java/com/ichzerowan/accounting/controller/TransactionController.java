@@ -1,8 +1,7 @@
 package com.ichzerowan.accounting.controller;
 
 import com.ichzerowan.accounting.dao.TransactionRepository;
-import com.ichzerowan.accounting.model.Delivery;
-import com.ichzerowan.accounting.model.Transaction;
+import com.ichzerowan.accounting.model.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;

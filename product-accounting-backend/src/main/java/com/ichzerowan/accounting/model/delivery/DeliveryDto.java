@@ -1,4 +1,4 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.delivery;
 
 import java.time.LocalDate;
 

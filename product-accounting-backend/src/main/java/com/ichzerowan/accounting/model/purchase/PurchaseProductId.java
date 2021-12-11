@@ -1,4 +1,4 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.purchase;
 
 import java.io.Serializable;
 import java.util.Objects;

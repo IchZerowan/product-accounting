@@ -1,4 +1,4 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.supplier;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

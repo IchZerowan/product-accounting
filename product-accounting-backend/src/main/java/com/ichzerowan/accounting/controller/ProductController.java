@@ -2,7 +2,7 @@ package com.ichzerowan.accounting.controller;
 
 import com.ichzerowan.accounting.dao.ObjectNotFoundException;
 import com.ichzerowan.accounting.dao.ProductRepository;
-import com.ichzerowan.accounting.model.Product;
+import com.ichzerowan.accounting.model.product.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

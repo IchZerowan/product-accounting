@@ -1,6 +1,6 @@
-package com.ichzerowan.accounting.model;
+package com.ichzerowan.accounting.model.delivery;
 
-public class PurchaseProductDto {
+public class DeliveryProductDto {
     private long productId;
     private int count;
 

@@ -1,6 +1,6 @@
 package com.ichzerowan.accounting.dao;
 
-import com.ichzerowan.accounting.model.Supplier;
+import com.ichzerowan.accounting.model.supplier.Supplier;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
