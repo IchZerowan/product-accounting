@@ -42,23 +42,23 @@ public class ProductAccountingApplication {
 	@Bean
 	CommandLineRunner initDeliveries(){
 		return args -> {
-			Product product1 = new Product("Biscuits", "Just some pretty biscuits", 16, 12);
-			Product product2 = new Product("Sugar", "A must-have component for any meal", 5, 3);
-			productRepository.save(product1);
-			productRepository.save(product2);
-
-			Supplier supplier = new Supplier("Bakery A ltd.", "+380999999999");
-			supplierRepository.save(supplier);
-
-			Delivery delivery = new Delivery(LocalDate.parse("2017-11-15"), 10, supplier);
-
-			DeliveryProduct deliveryProduct1 = new DeliveryProduct(delivery, product1, 10);
-			DeliveryProduct deliveryProduct2 = new DeliveryProduct(delivery, product2, 20);
-
-			log.info("Preloading " + deliveryRepository.save(delivery));
-
-			log.info("Preloading " + deliveryProductRepository.save(deliveryProduct1));
-			log.info("Preloading " + deliveryProductRepository.save(deliveryProduct2));
+//			Product product1 = new Product("Biscuits", "Just some pretty biscuits", 16, 12);
+//			Product product2 = new Product("Sugar", "A must-have component for any meal", 5, 3);
+//			productRepository.save(product1);
+//			productRepository.save(product2);
+//
+//			Supplier supplier = new Supplier("Bakery A ltd.", "+380999999999");
+//			supplierRepository.save(supplier);
+//
+//			Delivery delivery = new Delivery(LocalDate.parse("2017-11-15"), 10, supplier);
+//
+//			DeliveryProduct deliveryProduct1 = new DeliveryProduct(delivery, product1, 10);
+//			DeliveryProduct deliveryProduct2 = new DeliveryProduct(delivery, product2, 20);
+//
+//			log.info("Preloading " + deliveryRepository.save(delivery));
+//
+//			log.info("Preloading " + deliveryProductRepository.save(deliveryProduct1));
+//			log.info("Preloading " + deliveryProductRepository.save(deliveryProduct2));
 		};
 	}
 }

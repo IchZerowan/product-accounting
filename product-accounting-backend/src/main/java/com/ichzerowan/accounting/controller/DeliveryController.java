@@ -41,17 +41,21 @@ public class DeliveryController {
         Supplier supplier = supplierRepository.findById(deliveryDto.getSupplierId())
                 .orElseThrow(() -> new ObjectNotFoundException(Supplier.class, deliveryDto.getSupplierId()));
         Delivery newDelivery = new Delivery(deliveryDto.getDate(), deliveryDto.getShippingCost(), supplier);
+        newDelivery.updateTotal();
         return repository.save(newDelivery);
     }
 
     @PutMapping("/{id}")
     Delivery updateDelivery(@RequestBody DeliveryDto deliveryDto, @PathVariable Long id){
         return repository.findById(id).map(delivery -> {
+            if(delivery.isCompleted())
+                throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
             Supplier supplier = supplierRepository.findById(deliveryDto.getSupplierId())
                     .orElseThrow(() -> new ObjectNotFoundException(Supplier.class, deliveryDto.getSupplierId()));
             delivery.setDate(deliveryDto.getDate());
             delivery.setShippingCost(deliveryDto.getShippingCost());
             delivery.setSupplier(supplier);
+            delivery.updateTotal();
             return repository.save(delivery);
         }).orElseThrow(() -> new ObjectNotFoundException(Delivery.class, id));
     }
@@ -60,6 +64,8 @@ public class DeliveryController {
     void deleteDelivery(@PathVariable Long id){
         Delivery delivery =  repository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(Delivery.class, id));
+        if(delivery.isCompleted())
+            throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
         repository.delete(delivery);
     }
 
@@ -67,10 +73,14 @@ public class DeliveryController {
     Delivery addDeliveryProduct(@RequestBody DeliveryProductDto productDto, @PathVariable Long deliveryId){
         Delivery delivery =  repository.findById(deliveryId)
                 .orElseThrow(() -> new ObjectNotFoundException(Delivery.class, deliveryId));
+        if(delivery.isCompleted())
+            throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
         Product product = productRepository.findById(productDto.getProductId())
                 .orElseThrow(() -> new ObjectNotFoundException(Product.class, deliveryId));
         DeliveryProduct deliveryProduct = new DeliveryProduct(delivery, product, productDto.getCount());
         deliveryProductRepository.save(deliveryProduct);
+        delivery.updateTotal();
+        repository.save(delivery);
         return delivery;
     }
 
@@ -78,17 +88,28 @@ public class DeliveryController {
     Delivery updateDeliveryProduct(@RequestBody DeliveryProductDto productDto, @PathVariable Long deliveryId, @PathVariable Long productId){
         DeliveryProductId deliveryProductId = new DeliveryProductId(deliveryId, productId);
         DeliveryProduct deliveryProduct = deliveryProductRepository.findById(deliveryProductId)
-                .orElseThrow(() -> new ObjectNotFoundException(DeliveryProduct.class, deliveryId));
+                .orElseThrow(() -> new ObjectNotFoundException(DeliveryProduct.class, productId));
+        Delivery delivery = deliveryProduct.getDelivery();
+        if(delivery.isCompleted())
+            throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
         deliveryProduct.setCount(productDto.getCount());
         deliveryProductRepository.save(deliveryProduct);
-        return deliveryProduct.getDelivery();
+        delivery.updateTotal();
+        repository.save(delivery);
+        return delivery;
     }
 
     @DeleteMapping("/{deliveryId}/products/{productId}")
-    void deleteDeliveryProduct(@PathVariable Long deliveryId, @PathVariable Long productId){
+    Delivery deleteDeliveryProduct(@PathVariable Long deliveryId, @PathVariable Long productId){
         DeliveryProductId deliveryProductId = new DeliveryProductId(deliveryId, productId);
         DeliveryProduct deliveryProduct = deliveryProductRepository.findById(deliveryProductId)
-                .orElseThrow(() -> new ObjectNotFoundException(DeliveryProduct.class, deliveryId));
+                .orElseThrow(() -> new ObjectNotFoundException(DeliveryProduct.class, productId));
+        Delivery delivery = deliveryProduct.getDelivery();
+        if(delivery.isCompleted())
+            throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
         deliveryProductRepository.delete(deliveryProduct);
+        delivery.updateTotal();
+        repository.save(delivery);
+        return delivery;
     }
 }

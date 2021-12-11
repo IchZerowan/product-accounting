@@ -18,6 +18,10 @@ public class Purchase {
     @JsonIgnoreProperties("purchase")
     private List<PurchaseProduct> products;
 
+    private double total;
+
+    private boolean completed;
+
     public Purchase() { }
 
     public Purchase(LocalDate date) {
@@ -47,5 +51,24 @@ public class Purchase {
 
     public void setProducts(List<PurchaseProduct> products) {
         this.products = products;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public void updateTotal(){
+        total = 0;
+        for(PurchaseProduct product: products){
+            total += product.getPrice();
+        }
+    }
+
+    public double getTotal() {
+        return total;
     }
 }

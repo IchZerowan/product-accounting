@@ -23,6 +23,10 @@ public class Delivery {
     @JsonIgnoreProperties("delivery")
     private List<DeliveryProduct> products;
 
+    private double total;
+
+    private boolean completed;
+
     public Delivery() { }
 
     public Delivery(LocalDate date, double shippingCost, Supplier supplier) {
@@ -70,5 +74,24 @@ public class Delivery {
 
     public void setShippingCost(double shippingCost) {
         this.shippingCost = shippingCost;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public void updateTotal(){
+        total = shippingCost;
+        for(DeliveryProduct product: products){
+            total += product.getPrice();
+        }
+    }
+
+    public double getTotal() {
+        return total;
     }
 }

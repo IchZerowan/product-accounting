@@ -12,6 +12,7 @@ Represents a single product in the database
     "description": "A must-have component for any meal",
     "priceRetail": 5.0,
     "priceWholesale": 3.0,
+    "count": 10,
     "archived": false
 }
 ```
@@ -51,20 +52,21 @@ database
 ### JSON Schema
 
 ```json
-[
-    {
-        "id": 1,
-        "date": "2017-11-15",
-        "supplier": { ... },
-        "products": [
-            {
-                "product": { ... },
-                "count": 20,
-                "price": 120.0 // auto-calculated
-            }
-        ]
-    }
-]
+{
+    "id": 1,
+    "date": "2017-11-15",
+    "shippingCost": 2.9,
+    "supplier": { ... },
+    "products": [
+        {
+            "product": { ... },
+            "count": 20,
+            "price": 120.0 // auto-calculated
+        }
+    ],
+    "total": 122.9, // auto-calculated
+    "completed": false
+}
 ```
 
 * GET /deliveries - list all deliveries
@@ -104,19 +106,19 @@ database
 ### JSON Schema
 
 ```json
-[
-    {
-        "id": 1,
-        "date": "2017-11-15",
-        "products": [
-            {
-                "product": { ... },
-                "count": 20,
-                "price": 120.0 // auto-calculated
-            }
-        ]
-    }
-]
+{
+    "id": 1,
+    "date": "2017-11-15",
+    "products": [
+        {
+            "product": { ... },
+            "count": 20,
+            "price": 120.0 // auto-calculated
+        }
+    ],
+    "total": 120.0, // auto-calculated
+    "completed": false
+}
 ```
 
 * GET /purchases - list all purchases

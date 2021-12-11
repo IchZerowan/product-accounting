@@ -16,6 +16,8 @@ public class Product {
     private double priceWholesale;
     private boolean archived;
 
+    private int count;
+
     public Product() { }
 
     public Product(String name, String description, double priceRetail, double priceWholesale) {
@@ -71,5 +73,13 @@ public class Product {
 
     public void setPriceWholesale(double priceWholesale) {
         this.priceWholesale = priceWholesale;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

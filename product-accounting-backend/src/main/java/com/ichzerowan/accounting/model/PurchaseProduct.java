@@ -34,7 +34,7 @@ public class PurchaseProduct {
 
     public void setCount(int count) {
         this.count = count;
-        this.price = count * product.getPriceWholesale();
+        this.price = count * product.getPriceRetail();
     }
 
     public Purchase getPurchase() {
