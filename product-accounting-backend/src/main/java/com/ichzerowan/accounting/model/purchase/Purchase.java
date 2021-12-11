@@ -1,6 +1,7 @@
 package com.ichzerowan.accounting.model.purchase;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ichzerowan.accounting.model.coupon.Coupon;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,6 +22,10 @@ public class Purchase {
     private double total;
 
     private boolean completed;
+
+    @ManyToOne
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
 
     public Purchase() { }
 
@@ -66,9 +71,21 @@ public class Purchase {
         for(PurchaseProduct product: products){
             total += product.getPrice();
         }
+
+        if(coupon != null){
+            total -= Math.min(coupon.getAmount(), total);
+        }
     }
 
     public double getTotal() {
         return total;
+    }
+
+    public Coupon getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(Coupon coupon) {
+        this.coupon = coupon;
     }
 }

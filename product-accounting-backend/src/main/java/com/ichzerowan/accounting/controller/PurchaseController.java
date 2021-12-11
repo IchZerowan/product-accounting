@@ -1,6 +1,7 @@
 package com.ichzerowan.accounting.controller;
 
 import com.ichzerowan.accounting.dao.*;
+import com.ichzerowan.accounting.model.coupon.Coupon;
 import com.ichzerowan.accounting.model.product.Product;
 import com.ichzerowan.accounting.model.purchase.*;
 import com.ichzerowan.accounting.model.transaction.Transaction;
@@ -29,6 +30,9 @@ public class PurchaseController {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Autowired
+    private CouponRepository couponRepository;
+
     @GetMapping("")
     List<Purchase> getAll(){
         return repository.findAll();
@@ -43,6 +47,8 @@ public class PurchaseController {
     @PostMapping("")
     Purchase addPurchase(@RequestBody PurchaseDto purchaseDto){
         Purchase newPurchase = new Purchase(purchaseDto.getDate());
+        Coupon coupon = couponRepository.findFirstByCode(purchaseDto.getCouponCode());
+        newPurchase.setCoupon(coupon);
         newPurchase.updateTotal();
         return repository.save(newPurchase);
     }
@@ -52,6 +58,8 @@ public class PurchaseController {
         return repository.findById(id).map(purchase -> {
             if(purchase.isCompleted())
                 throw new ModificationNotAllowedException(Purchase.class, purchase.getId());
+            Coupon coupon = couponRepository.findFirstByCode(purchaseDto.getCouponCode());
+            purchase.setCoupon(coupon);
             purchase.setDate(purchaseDto.getDate());
             purchase.updateTotal();
             return repository.save(purchase);
