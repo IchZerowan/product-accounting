@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -23,6 +24,9 @@ public class DeliveryController {
 
     @Autowired
     private SupplierRepository supplierRepository;
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @GetMapping("")
     @Transactional
@@ -56,6 +60,25 @@ public class DeliveryController {
             delivery.setShippingCost(deliveryDto.getShippingCost());
             delivery.setSupplier(supplier);
             delivery.updateTotal();
+            return repository.save(delivery);
+        }).orElseThrow(() -> new ObjectNotFoundException(Delivery.class, id));
+    }
+
+    @PutMapping("/{id}/commit")
+    Delivery commitDelivery(@PathVariable Long id){
+        return repository.findById(id).map(delivery -> {
+            if(delivery.isCompleted())
+                throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
+
+            for(DeliveryProduct deliveryProduct: delivery.getProducts()) {
+                Product product = deliveryProduct.getProduct();
+                product.setCount(product.getCount() + deliveryProduct.getCount());
+                productRepository.save(product);
+            }
+            Transaction transaction = new Transaction(Transaction.Type.DELIVERY, delivery.getId(), -delivery.getTotal());
+            transactionRepository.save(transaction);
+            delivery.setCompleted(true);
+
             return repository.save(delivery);
         }).orElseThrow(() -> new ObjectNotFoundException(Delivery.class, id));
     }

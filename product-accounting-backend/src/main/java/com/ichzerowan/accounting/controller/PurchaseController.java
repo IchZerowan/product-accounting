@@ -24,6 +24,9 @@ public class PurchaseController {
     @Autowired
     private SupplierRepository supplierRepository;
 
+    @Autowired
+    private TransactionRepository transactionRepository;
+
     @GetMapping("")
     @Transactional
     List<Purchase> getAll(){
@@ -50,6 +53,29 @@ public class PurchaseController {
                 throw new ModificationNotAllowedException(Purchase.class, purchase.getId());
             purchase.setDate(purchaseDto.getDate());
             purchase.updateTotal();
+            return repository.save(purchase);
+        }).orElseThrow(() -> new ObjectNotFoundException(Purchase.class, id));
+    }
+
+    @Transactional
+    @PutMapping("/{id}/commit")
+    Purchase commitPurchase(@PathVariable Long id){
+        return repository.findById(id).map(purchase -> {
+            if(purchase.isCompleted())
+                throw new ModificationNotAllowedException(Purchase.class, purchase.getId());
+
+            for(PurchaseProduct purchaseProduct: purchase.getProducts()) {
+                Product product = purchaseProduct.getProduct();
+                if(product.getCount() < purchaseProduct.getCount()){
+                    throw new OutOfStockException(product.getId(), purchaseProduct.getCount(), product.getCount());
+                }
+                product.setCount(product.getCount() - purchaseProduct.getCount());
+                productRepository.save(product);
+            }
+            Transaction transaction = new Transaction(Transaction.Type.PURCHASE, purchase.getId(), purchase.getTotal());
+            transactionRepository.save(transaction);
+            purchase.setCompleted(true);
+
             return repository.save(purchase);
         }).orElseThrow(() -> new ObjectNotFoundException(Purchase.class, id));
     }
@@ -82,7 +108,7 @@ public class PurchaseController {
     Purchase updatePurchaseProduct(@RequestBody PurchaseProductDto productDto, @PathVariable Long purchaseId, @PathVariable Long productId){
         PurchaseProductId purchaseProductId = new PurchaseProductId(purchaseId, productId);
         PurchaseProduct purchaseProduct = purchaseProductRepository.findById(purchaseProductId)
-                .orElseThrow(() -> new ObjectNotFoundException(PurchaseProduct.class, purchaseId));
+                .orElseThrow(() -> new ObjectNotFoundException(PurchaseProduct.class, productId));
         Purchase purchase = purchaseProduct.getPurchase();
         if(purchase.isCompleted())
             throw new ModificationNotAllowedException(Purchase.class, purchase.getId());

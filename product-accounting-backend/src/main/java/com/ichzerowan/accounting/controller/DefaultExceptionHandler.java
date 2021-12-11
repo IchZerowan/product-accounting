@@ -2,6 +2,7 @@ package com.ichzerowan.accounting.controller;
 
 import com.ichzerowan.accounting.dao.ModificationNotAllowedException;
 import com.ichzerowan.accounting.dao.ObjectNotFoundException;
+import com.ichzerowan.accounting.dao.OutOfStockException;
 import com.ichzerowan.accounting.model.ExceptionInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,7 +23,7 @@ public class DefaultExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    @ExceptionHandler(ModificationNotAllowedException.class)
+    @ExceptionHandler({ModificationNotAllowedException.class, OutOfStockException.class})
     @ResponseBody
     ExceptionInfo handleNotAllowed(HttpServletRequest req, Exception ex) {
         return new ExceptionInfo(405, ex);
