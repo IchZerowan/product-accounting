@@ -87,7 +87,7 @@ public class PurchaseController {
                 coupon.setCount(coupon.getCount() - 1);
                 couponRepository.save(coupon);
             }
-            
+
             Transaction transaction = new Transaction(Transaction.Type.PURCHASE, purchase.getId(), purchase.getTotal());
             transactionRepository.save(transaction);
             purchase.setCompleted(true);
