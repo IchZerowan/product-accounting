@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "60be252c-584b-4cd2-9321-d72340bbf76c": {
+      "ProjectGuid": "60be252c-584b-4cd2-9321-d72340bbf76c",
+      "DisplayName": "product-accounting-frontend",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
