@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Jhsx3VyUWcu+zCnUTO8RbsG1tIBakBUqhOKavsWO1RLgZrsCAHsD5Ns/OP1/A0xf4jNlM3xJ+cCgfwSCMAMtTw==",
+  "dgSpecHash": "9P4vceY7klNwz63DTo/jWK4nOl/IIszegn2m7Q8JYJkubiLoZLRK2TYWUX9KJMdaHRlEER8HSGoRRoaa7IFJOg==",
   "success": true,
   "projectFilePath": "C:\\Users\\JNANEU\\source\\repos\\product-accounting\\product-accounting-frontend\\product-accounting-frontend\\product-accounting-frontend.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\JNANEU\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -19,3 +19,5 @@ C:\Users\JNANEU\source\repos\product-accounting\product-accounting-frontend\prod
 C:\Users\JNANEU\source\repos\product-accounting\product-accounting-frontend\product-accounting-frontend\obj\Debug\net6.0-windows\ref\product-accounting-frontend.dll
 C:\Users\JNANEU\source\repos\product-accounting\product-accounting-frontend\product-accounting-frontend\obj\Debug\net6.0-windows\product-accounting-frontend.pdb
 C:\Users\JNANEU\source\repos\product-accounting\product-accounting-frontend\product-accounting-frontend\obj\Debug\net6.0-windows\product-accounting-frontend.genruntimeconfig.cache
+C:\Users\JNANEU\source\repos\product-accounting\product-accounting-frontend\product-accounting-frontend\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
+C:\Users\JNANEU\source\repos\product-accounting\product-accounting-frontend\product-accounting-frontend\obj\Debug\net6.0-windows\product-accounting-frontend.csproj.CopyComplete
