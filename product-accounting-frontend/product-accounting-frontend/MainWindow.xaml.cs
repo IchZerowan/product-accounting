@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net;
+using System.Net.Http;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -29,19 +30,15 @@ namespace product_accounting_frontend
             startupCheckProducts();
         }
 
-        private void startupCheckProducts()
+        private async void startupCheckProducts()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://product-accounting.us-east-2.elasticbeanstalk.com/products");
-            List<Product> products = new List<Product>();
-            string responseJSON;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            using (Stream stream = response.GetResponseStream())
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                responseJSON = reader.ReadToEnd();
-            }
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/products");  
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://product-accounting.us-east-2.elasticbeanstalk.com/products");           
+            string responseJSON = await response.Content.ReadAsStringAsync();
             textBlock1.Text = "";
             textBlock1.Text = responseJSON;
+            List<Product> products = new List<Product>();
             try
             {
                 products = JsonConvert.DeserializeObject<List<Product>>(responseJSON);
