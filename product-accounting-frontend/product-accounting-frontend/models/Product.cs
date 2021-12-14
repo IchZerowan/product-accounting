@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
+using product_accounting_frontend.models;
 
 namespace product_accounting_frontend
 {
-    public class Product
+    public class Product : EntityBase
     {
-        [JsonProperty("id")]
-        public int id { get; set; }
+       
         [JsonProperty("name")]
         public string name { get; set; }
         [JsonProperty("description")]
@@ -24,18 +24,7 @@ namespace product_accounting_frontend
         private bool archived { get; set; }
         [JsonProperty("count")]
         public int count { get; set; }
-        [JsonIgnore]
-        public Visibility isEditingButtonsVisible { get; set; } = Visibility.Collapsed;
-        [JsonIgnore]
-        public Visibility isViewButtonsVisible { get; set; } = Visibility.Visible;
-        [JsonIgnore]
-        public Visibility isAddButtonsVisible { get; set; } = Visibility.Collapsed;
-        [JsonIgnore]
-        public Visibility isEditingFieldsVisible { get; set; } = Visibility.Collapsed;
-        [JsonIgnore]
-        public Visibility isViewFieldsVisible { get; set; } = Visibility.Visible;
-        [JsonIgnore]
-        public Visibility isAddFieldsVisible { get; set; } = Visibility.Collapsed;
+        
         Product()
         {
 

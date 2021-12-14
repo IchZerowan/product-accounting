@@ -36,7 +36,15 @@ namespace product_accounting_frontend
             productsView.ItemsSource = products;
         }
 
-        
+        private void AddAnonymousObject(EntityBase entity)
+        {
+            entity.isViewButtonsVisible = Visibility.Collapsed;
+            entity.isEditingButtonsVisible = Visibility.Collapsed;
+            entity.isViewFieldsVisible = Visibility.Collapsed;
+            entity.isEditingFieldsVisible = Visibility.Collapsed;
+            entity.isAddFieldsVisible = Visibility.Visible;
+            entity.isAddButtonsVisible = Visibility.Visible;
+        }
 
         private async void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
@@ -99,13 +107,7 @@ namespace product_accounting_frontend
         {
             products.Add(new Product(0, "", "", 0,0, false, 0));
             productsView.Items.Refresh();
-            int lastProductIndex = products.Count - 1;
-            products[lastProductIndex].isViewButtonsVisible = Visibility.Collapsed;
-            products[lastProductIndex].isEditingButtonsVisible = Visibility.Collapsed;
-            products[lastProductIndex].isViewFieldsVisible = Visibility.Collapsed;
-            products[lastProductIndex].isEditingFieldsVisible = Visibility.Collapsed;
-            products[lastProductIndex].isAddFieldsVisible = Visibility.Visible;
-            products[lastProductIndex].isAddButtonsVisible = Visibility.Visible;
+            AddAnonymousObject(products[products.Count - 1]);
             productsView.Items.Refresh();
         }
         
@@ -115,7 +117,7 @@ namespace product_accounting_frontend
             Button button = sender as Button;
             int selectedProductIndex = products.FindIndex(product => product.id.ToString() == button.Uid);           
             ProductDAO productDAO = new ProductDAO();
-            productDAO.executePostQuery(products[selectedProductIndex]);
+            await productDAO.executePostQuery(products[selectedProductIndex]);
             products = Task.Run(productDAO.executeGetQuery).Result;            
             productsView.ItemsSource = products;
             productsView.Items.Refresh();
@@ -246,13 +248,7 @@ namespace product_accounting_frontend
         {
             suppliers.Add(new Supplier(0, "", "", false));
             suppliersView.Items.Refresh();
-            int lastProductIndex = suppliers.Count - 1;
-            suppliers[lastProductIndex].isViewButtonsVisible = Visibility.Collapsed;
-            suppliers[lastProductIndex].isEditingButtonsVisible = Visibility.Collapsed;
-            suppliers[lastProductIndex].isViewFieldsVisible = Visibility.Collapsed;
-            suppliers[lastProductIndex].isEditingFieldsVisible = Visibility.Collapsed;
-            suppliers[lastProductIndex].isAddFieldsVisible = Visibility.Visible;
-            suppliers[lastProductIndex].isAddButtonsVisible = Visibility.Visible;
+            AddAnonymousObject(suppliers[suppliers.Count-1]);            
             suppliersView.Items.Refresh();
         }
     }

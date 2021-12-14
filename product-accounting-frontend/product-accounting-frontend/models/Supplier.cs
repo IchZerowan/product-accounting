@@ -8,28 +8,15 @@ using Newtonsoft.Json;
 
 namespace product_accounting_frontend.models
 {
-    public class Supplier
+    public class Supplier : EntityBase
     {
-        [JsonProperty("id")]
-        public int id { get; set; }
+        
         [JsonProperty("name")]
         public string name { get; set; }
         [JsonProperty("phone")]
         public string phone { get; set; }
         [JsonProperty("archived")]
-        public bool archived { get; set; }
-        [JsonIgnore]
-        public Visibility isEditingButtonsVisible { get; set; } = Visibility.Collapsed;
-        [JsonIgnore]
-        public Visibility isViewButtonsVisible { get; set; } = Visibility.Visible;
-        [JsonIgnore]
-        public Visibility isAddButtonsVisible { get; set; } = Visibility.Collapsed;
-        [JsonIgnore]
-        public Visibility isEditingFieldsVisible { get; set; } = Visibility.Collapsed;
-        [JsonIgnore]
-        public Visibility isViewFieldsVisible { get; set; } = Visibility.Visible;
-        [JsonIgnore]
-        public Visibility isAddFieldsVisible { get; set; } = Visibility.Collapsed;
+        public bool archived { get; set; }       
 
         Supplier()
         {
