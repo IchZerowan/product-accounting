@@ -56,6 +56,23 @@ namespace product_accounting_frontend.dao
             return products;
         }
 
+        public async Task<List<Product>> executeArchivedGetQuery()
+        {
+            List<Product> products = new List<Product>();
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/products/archived");
+                string responseJSON = await response.Content.ReadAsStringAsync();
+                products = JsonConvert.DeserializeObject<List<Product>>(responseJSON);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return products;
+        }
+
         public async Task<bool> executePostQuery(Product product)
         {
             HttpClient client = new HttpClient();

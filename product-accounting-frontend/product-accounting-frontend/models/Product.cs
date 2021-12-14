@@ -25,11 +25,17 @@ namespace product_accounting_frontend
         [JsonProperty("count")]
         public int count { get; set; }
         [JsonIgnore]
-        public Visibility isEditingVisible { get; set; } = Visibility.Collapsed;
+        public Visibility isEditingButtonsVisible { get; set; } = Visibility.Collapsed;
         [JsonIgnore]
-        public Visibility isViewVisible { get; set; } = Visibility.Visible;
+        public Visibility isViewButtonsVisible { get; set; } = Visibility.Visible;
         [JsonIgnore]
-        public Visibility isAddVisible { get; set; } = Visibility.Collapsed;
+        public Visibility isAddButtonsVisible { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility isEditingFieldsVisible { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility isViewFieldsVisible { get; set; } = Visibility.Visible;
+        [JsonIgnore]
+        public Visibility isAddFieldsVisible { get; set; } = Visibility.Collapsed;
         Product()
         {
 

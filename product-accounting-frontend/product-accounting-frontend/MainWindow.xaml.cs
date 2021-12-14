@@ -47,9 +47,11 @@ namespace product_accounting_frontend
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            int selectedProductInted = products.FindIndex(product => product.id.ToString() == button.Uid);
-            products[selectedProductInted].isViewVisible = Visibility.Collapsed;
-            products[selectedProductInted].isEditingVisible = Visibility.Visible;
+            int selectedProductIndex = products.FindIndex(product => product.id.ToString() == button.Uid);
+            products[selectedProductIndex].isViewButtonsVisible = Visibility.Collapsed;
+            products[selectedProductIndex].isEditingButtonsVisible = Visibility.Visible;
+            products[selectedProductIndex].isViewFieldsVisible = Visibility.Collapsed;
+            products[selectedProductIndex].isEditingFieldsVisible = Visibility.Visible;
             productsView.Items.Refresh();
         }
 
@@ -57,8 +59,10 @@ namespace product_accounting_frontend
         {
             Button button = sender as Button;
             int selectedProductIndex = products.FindIndex(product => product.id.ToString() == button.Uid);
-            products[selectedProductIndex].isViewVisible = Visibility.Visible;
-            products[selectedProductIndex].isEditingVisible = Visibility.Collapsed;
+            products[selectedProductIndex].isViewButtonsVisible = Visibility.Visible;
+            products[selectedProductIndex].isEditingButtonsVisible = Visibility.Collapsed;
+            products[selectedProductIndex].isViewFieldsVisible = Visibility.Visible;
+            products[selectedProductIndex].isEditingFieldsVisible = Visibility.Collapsed;
             productsView.Items.Refresh();
             products.Clear();
             ProductDAO productDAO = new ProductDAO();
@@ -79,8 +83,10 @@ namespace product_accounting_frontend
             productsView.ItemsSource = products;
             Button button = sender as Button;
             int selectedProductIndex = products.FindIndex(product => product.id.ToString() == button.Uid);
-            products[selectedProductIndex].isViewVisible = Visibility.Visible;
-            products[selectedProductIndex].isEditingVisible = Visibility.Collapsed;
+            products[selectedProductIndex].isViewButtonsVisible = Visibility.Visible;
+            products[selectedProductIndex].isEditingButtonsVisible = Visibility.Collapsed;
+            products[selectedProductIndex].isViewFieldsVisible = Visibility.Visible;
+            products[selectedProductIndex].isEditingFieldsVisible = Visibility.Collapsed;
             productsView.Items.Refresh();
         }
 
@@ -89,9 +95,12 @@ namespace product_accounting_frontend
             products.Add(new Product(0, "", "", 0,0, false, 0));
             productsView.Items.Refresh();
             int lastProductIndex = products.Count - 1;
-            products[lastProductIndex].isViewVisible = Visibility.Collapsed;
-            products[lastProductIndex].isEditingVisible = Visibility.Collapsed;
-            products[lastProductIndex].isAddVisible = Visibility.Visible;
+            products[lastProductIndex].isViewButtonsVisible = Visibility.Collapsed;
+            products[lastProductIndex].isEditingButtonsVisible = Visibility.Collapsed;
+            products[lastProductIndex].isViewFieldsVisible = Visibility.Collapsed;
+            products[lastProductIndex].isEditingFieldsVisible = Visibility.Collapsed;
+            products[lastProductIndex].isAddFieldsVisible = Visibility.Visible;
+            products[lastProductIndex].isAddButtonsVisible = Visibility.Visible;
             productsView.Items.Refresh();
         }
         
@@ -99,13 +108,12 @@ namespace product_accounting_frontend
         private async void AcceptAddButton_Click(Object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
-            int selectedProductIndex = products.FindIndex(product => product.id.ToString() == button.Uid);
-            
+            int selectedProductIndex = products.FindIndex(product => product.id.ToString() == button.Uid);           
             ProductDAO productDAO = new ProductDAO();
             productDAO.executePostQuery(products[selectedProductIndex]);
-            products.Clear();
-            products = Task.Run(productDAO.executeGetQuery).Result;
+            products = Task.Run(productDAO.executeGetQuery).Result;            
             productsView.ItemsSource = products;
+            productsView.Items.Refresh();
         }
 
         private async void DiscardAddButton_Click(Object sender, RoutedEventArgs e)
@@ -116,6 +124,14 @@ namespace product_accounting_frontend
 
         private void archivedProducts_Click(object sender, RoutedEventArgs e)
         {
+            addProductButton.Visibility = Visibility.Collapsed;
+            ProductDAO productDAO = new ProductDAO();
+            products = Task.Run(productDAO.executeArchivedGetQuery).Result;
+            foreach(Product product in products)
+            {
+                product.isViewButtonsVisible = Visibility.Collapsed;
+            }
+            productsView.ItemsSource = products;
         }
 
         private void suppliers_Click(object sender, RoutedEventArgs e)

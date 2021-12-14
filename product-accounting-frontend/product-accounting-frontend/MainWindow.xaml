@@ -22,43 +22,43 @@
                         <StackPanel Orientation="Horizontal" Uid="{Binding id}">
                             <StackPanel Orientation="Vertical">
                                 <Label FontSize="10" Content="Product name:"/>
-                                    <TextBlock Text="{Binding name}" Visibility="{Binding isViewVisible}"/>
-                                    <TextBox Text="{Binding name}" Visibility="{Binding isEditingVisible}"/>
-                                    <TextBox Text="{Binding name}" Visibility="{Binding isAddVisible}"/>
+                                    <TextBlock Text="{Binding name}" Visibility="{Binding isViewFieldsVisible}"/>
+                                    <TextBox Text="{Binding name}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBox Text="{Binding name}" Visibility="{Binding isAddFieldsVisible}"/>
                                 </StackPanel>
                             <StackPanel Orientation="Vertical">
                                 <Label FontSize="10" Content="Product retail price:"/>
-                                    <TextBlock Text="{Binding priceRetail}" Visibility="{Binding isViewVisible}"/>
-                                    <TextBox Text="{Binding priceRetail}" Visibility="{Binding isEditingVisible}"/>
-                                    <TextBox Text="{Binding priceRetail}" Visibility="{Binding isAddVisible}"/>
+                                    <TextBlock Text="{Binding priceRetail}" Visibility="{Binding isViewFieldsVisible}"/>
+                                    <TextBox Text="{Binding priceRetail}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBox Text="{Binding priceRetail}" Visibility="{Binding isAddFieldsVisible}"/>
                             </StackPanel>
                             <StackPanel Orientation="Vertical">
                                 <Label FontSize="10" Content="Product wholesale price:"/>
-                                    <TextBlock Text="{Binding priceWholesale}" Visibility="{Binding isViewVisible}"/>
-                                    <TextBox Text="{Binding priceWholesale}" Visibility="{Binding isEditingVisible}"/>
-                                    <TextBox Text="{Binding priceWholesale}" Visibility="{Binding isAddVisible}"/>
+                                    <TextBlock Text="{Binding priceWholesale}" Visibility="{Binding isViewFieldsVisible}"/>
+                                    <TextBox Text="{Binding priceWholesale}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBox Text="{Binding priceWholesale}" Visibility="{Binding isAddFieldsVisible}"/>
                                 </StackPanel>
                             <StackPanel Orientation="Vertical">
                                 <Label FontSize="10" Content="Count:"/>
-                                    <TextBlock Text="{Binding count}" Visibility="{Binding isViewVisible}"/>
-                                    <TextBox Text="{Binding count}" Visibility="{Binding isEditingVisible}"/>
-                                    <TextBox Text="{Binding count}" Visibility="{Binding isAddVisible}"/>
+                                    <TextBlock Text="{Binding count}" Visibility="{Binding isViewFieldsVisible}"/>
+                                    <TextBox Text="{Binding count}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBox Text="{Binding count}" Visibility="{Binding isAddFieldsVisible}"/>
                                 </StackPanel>
                             <StackPanel Orientation="Vertical" Width="165">
                                 <Label FontSize="10" Content="Description:"/>
-                                    <TextBlock Text="{Binding description}" Visibility="{Binding isViewVisible}"/>
-                                    <TextBox Text="{Binding description}" Visibility="{Binding isEditingVisible}"/>
-                                    <TextBox Text="{Binding description}" Visibility="{Binding isAddVisible}"/>
+                                    <TextBlock Text="{Binding description}" Visibility="{Binding isViewFieldsVisible}"/>
+                                    <TextBox Text="{Binding description}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBox Text="{Binding description}" Visibility="{Binding isAddFieldsVisible}"/>
                                 </StackPanel>
-                                <StackPanel x:Name="initialButtonBlock" Orientation="Vertical" Visibility="{Binding isViewVisible}">
+                                <StackPanel x:Name="initialButtonBlock" Orientation="Vertical" Visibility="{Binding isViewButtonsVisible}">
                                 <Button Click="DeleteButton_Click" Uid="{Binding id}">Delete</Button>
                                 <Button Click="EditButton_Click" Uid="{Binding id}">Edit</Button>
                             </StackPanel>
-                                <StackPanel x:Name="dialogButtonBlock" Orientation="Vertical" Visibility="{Binding isEditingVisible}">
+                                <StackPanel x:Name="dialogButtonBlock" Orientation="Vertical" Visibility="{Binding isEditingButtonsVisible}">
                                 <Button Click="AcceptButton_Click" Uid="{Binding id}">Accept</Button>
                                 <Button Click="DiscardButton_Click" Uid="{Binding id}">Discard</Button>
                             </StackPanel>
-                                <StackPanel x:Name="addButtonBlock" Orientation="Vertical" Visibility="{Binding isAddVisible}">
+                                <StackPanel x:Name="addButtonBlock" Orientation="Vertical" Visibility="{Binding isAddButtonsVisible}">
                                 <Button Click="AcceptAddButton_Click" Uid="{Binding id}">Accept</Button>
                                 <Button Click="DiscardAddButton_Click" Uid="{Binding id}">Discard</Button>
                             </StackPanel>
