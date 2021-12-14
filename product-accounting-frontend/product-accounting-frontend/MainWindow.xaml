@@ -16,7 +16,7 @@
         </StackPanel>
         <ScrollViewer Margin="200,0,0,0">
             <StackPanel x:Name="MainPanel">
-            <ListBox x:Name="productsView" HorizontalAlignment="Stretch">
+            <ListBox x:Name="productsView" HorizontalAlignment="Stretch" Visibility="Collapsed">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Uid="{Binding id}">
@@ -66,7 +66,40 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button x:Name="addProductButton" Visibility="Collapsed" Click="AddProductButtonClicked">Add</Button>
+                <ListBox x:Name="suppliersView" HorizontalAlignment="Stretch" Visibility="Collapsed">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Uid="{Binding id}">
+                                <StackPanel Orientation="Vertical">
+                                    <Label FontSize="10" Content="Supplier name:"/>
+                                    <TextBlock Text="{Binding name}" Visibility="{Binding isViewFieldsVisible}"/>
+                                    <TextBox Text="{Binding name}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBox Text="{Binding name}" Visibility="{Binding isAddFieldsVisible}"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <Label FontSize="10" Content="Supplier phone:"/>
+                                    <TextBlock Text="{Binding phone}" Visibility="{Binding isViewFieldsVisible}"/>
+                                    <TextBox Text="{Binding phone}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBox Text="{Binding phone}" Visibility="{Binding isAddFieldsVisible}"/>
+                                </StackPanel>
+                                <StackPanel x:Name="initialButtonBlock" Orientation="Vertical" Visibility="{Binding isViewButtonsVisible}">
+                                    <Button Click="DeleteSupplierButton_Click" Uid="{Binding id}">Delete</Button>
+                                    <Button Click="EditSupplierButton_Click" Uid="{Binding id}">Edit</Button>
+                                </StackPanel>
+                                <StackPanel x:Name="dialogButtonBlock" Orientation="Vertical" Visibility="{Binding isEditingButtonsVisible}">
+                                    <Button Click="AcceptSupplierButton_Click" Uid="{Binding id}">Accept</Button>
+                                    <Button Click="DiscardSupplierButton_Click" Uid="{Binding id}">Discard</Button>
+                                </StackPanel>
+                                <StackPanel x:Name="addButtonBlock" Orientation="Vertical" Visibility="{Binding isAddButtonsVisible}">
+                                    <Button Click="AcceptSupplierAddButton_Click" Uid="{Binding id}">Accept</Button>
+                                    <Button Click="DiscardSupplierAddButton_Click" Uid="{Binding id}">Discard</Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button x:Name="addProductButton" Visibility="Collapsed" Click="AddProductButtonClicked">Add</Button>
+                <Button x:Name="addSupplierButton" Visibility="Collapsed" Click="AddSupplierButtonClicked">Add</Button>
             </StackPanel>
         </ScrollViewer>
     </Grid>
