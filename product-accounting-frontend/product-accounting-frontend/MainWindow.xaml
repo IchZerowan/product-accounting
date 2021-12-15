@@ -17,6 +17,8 @@
             <Button x:Name="archivedCouponsBtn" Click="archivedCouponsBtn_Click">Archived coupons</Button>
             <Button x:Name="deliveriesBtn" Click="deliveriesBtn_Click">Delivery</Button>
             <Button x:Name="committedDeliveriesBtn" Click="committedDeliveriesBtn_Click">Commited delivery</Button>
+            <Button x:Name="purchaseBtn" Click="purchaseBtn_Click">Purchases</Button>
+            <Button x:Name="commitedPurchaseBtn" Click="commitedPurchaseBtn_Click">Commited purchases</Button>
         </StackPanel>
         <ScrollViewer Margin="200,0,0,0">
             <StackPanel x:Name="MainPanel">
@@ -257,10 +259,87 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                <ListBox x:Name="purchasesView" HorizontalAlignment="Stretch" Visibility="Collapsed">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Uid="{Binding id}">
+                                <StackPanel Orientation="Vertical">
+                                    <Label FontSize="10" Content="Id:"/>
+                                    <TextBlock Text="{Binding id}" Visibility="Visible"/>
+                                </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label FontSize="10" Content="Date:"/>
+                                        <TextBlock Text="{Binding date}" Visibility="{Binding isViewFieldsVisible}"/>
+                                        <TextBox Text="{Binding date}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                        <TextBox Text="{Binding date}" Visibility="{Binding isAddFieldsVisible}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label FontSize="10" Content="Coupon:"/>
+                                        <TextBlock Text="{Binding coupon.code}" Visibility="{Binding isViewFieldsVisible}"/>
+                                        <TextBox Text="{Binding coupon.code}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                        <TextBox Text="{Binding coupon.code}" Visibility="{Binding isAddFieldsVisible}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Vertical">
+                                        <Label FontSize="10" Content="Total:"/>
+                                        <TextBlock Text="{Binding total}" Visibility="Visible"/>
+                                    </StackPanel>
+                                    <StackPanel x:Name="initialButtonBlock" Orientation="Vertical" Visibility="{Binding isViewButtonsVisible}">
+                                    <Button Click="DeletePurchaseButton_Click" Uid="{Binding id}">Delete</Button>
+                                        <Button Click="EditPurchaseButton_Click" Uid="{Binding id}">Edit</Button>
+                                </StackPanel>
+                                <StackPanel x:Name="dialogButtonBlock" Orientation="Vertical" Visibility="{Binding isEditingButtonsVisible}">
+                                        <Button Click="AcceptPurchaseButton_Click" Uid="{Binding id}">Accept</Button>
+                                        <Button Click="DiscardPurchaseButton_Click" Uid="{Binding id}">Discard</Button>
+                                </StackPanel>
+                                <StackPanel x:Name="addButtonBlock" Orientation="Vertical" Visibility="{Binding isAddButtonsVisible}">
+                                        <Button Click="AcceptAddPurchaseButton_Click" Uid="{Binding id}">Accept</Button>
+                                        <Button Click="DiscardAddPurchaseButton_Click" Uid="{Binding id}">Discard</Button>
+                                </StackPanel>
+                            </StackPanel>
+                                <Label Content="Products list"/>
+                                <ListBox x:Name="productsDeliveryPanel" ItemsSource="{Binding products}" Uid="{Binding id}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Uid="{Binding parentId}">
+                                                <StackPanel Orientation="Vertical" Visibility="{Binding productInfoVisibility}">
+                                                    <Label FontSize="10" Content="Product name:" />
+                                                    <TextBlock Text="{Binding product.name}" Visibility="Visible"/>
+                                                    <TextBox Text="{Binding product.name}" Visibility="Collapsed"/>
+                                                    <TextBox Text="{Binding product.name}" Visibility="Collapsed"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Vertical" Visibility="{Binding productAddByIdVisibility}">
+                                                    <Label FontSize="10" Content="Product id:"/>
+                                                    <TextBox Text="{Binding product.id}" Visibility="Visible"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Vertical" Visibility="{Binding productAddByIdVisibility}">
+                                                    <Label FontSize="10" Content="Product count:"/>
+                                                    <TextBox Text="{Binding count}" Visibility="Visible"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Vertical" Visibility="{Binding productInfoVisibility}">
+                                                    <Label FontSize="10" Content="Product count:"/>
+                                                    <TextBlock Text="{Binding count}" Visibility="Visible"/>
+                                                    <TextBox Text="{Binding count}" Visibility="Collapsed"/>
+                                                    <TextBox Text="{Binding count}" Visibility="Collapsed"/>
+                                                </StackPanel>
+                                                <Button x:Name="confirmProductFromDeliveryBtn" Click="confirmProductFromPurchaseBtn_Click" Uid="{Binding parentId}" Visibility="{Binding confirmProductVisibility}">Confirm</Button>
+                                                <Button x:Name="discardProductFromDeliveryBtn" Click="discardProductFromPurchaseBtn_Click"  Uid="{Binding parentId}" Visibility="{Binding discardProductVisibility}">Discard</Button>
+                                                <Button x:Name="removeProductFromDeliveryBtn" Click="removeProductFromPurchaseBtn_Click" Uid="{Binding product.id}" Visibility="{Binding removeProductVisibility}">Remove</Button>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Button x:Name="addProductToDelivery" Click="addProductToPurchase_Click" Uid="{Binding id}" Visibility="{Binding addProductButtonVisibility}">Add product</Button>
+                                <Button x:Name="commitDeliveryDelivery" Click="commitDeliveryPurchase_Click" Uid="{Binding id}" Visibility="{Binding addProductButtonVisibility}">CommitDelivery</Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <Button x:Name="addProductButton" Visibility="Collapsed" Click="AddProductButtonClicked">Add</Button>
                 <Button x:Name="addSupplierButton" Visibility="Collapsed" Click="AddSupplierButtonClicked">Add</Button>
                 <Button x:Name="addCouponButton" Visibility="Collapsed" Click="addCouponButton_Click">Add</Button>
                 <Button x:Name="addDeliveryButton" Visibility="Collapsed" Click="addDeliveryButton_Click">Add</Button>
+                <Button x:Name="addPurchaseButton" Visibility="Collapsed" Click="addPurchaseButton_Click">Add</Button>
             </StackPanel>
         </ScrollViewer>
     </Grid>
