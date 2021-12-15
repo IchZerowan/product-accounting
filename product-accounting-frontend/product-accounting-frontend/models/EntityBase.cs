@@ -24,5 +24,20 @@ namespace product_accounting_frontend.models
         public Visibility isViewFieldsVisible { get; set; } = Visibility.Visible;
         [JsonIgnore]
         public Visibility isAddFieldsVisible { get; set; } = Visibility.Collapsed;
+
+        public void setEditMode()
+        {
+
+        }
+
+        public void setAddMode()
+        {
+
+        }
+
+        public void setViewMode()
+        {
+
+        }
     }
 }

@@ -17,9 +17,9 @@ namespace product_accounting_frontend
         [JsonProperty("description")]
         public string description { get; set; }
         [JsonProperty("priceRetail")]
-        public float priceRetail { get; set; }
+        public double priceRetail { get; set; }
         [JsonProperty("priceWholesale")]
-        public float priceWholesale { get; set; }
+        public double priceWholesale { get; set; }
         [JsonProperty("archived")]
         private bool archived { get; set; }
         [JsonProperty("count")]
@@ -29,7 +29,7 @@ namespace product_accounting_frontend
         {
 
         }
-        public Product(int id, string name, string description, float priceRetail, float priceWholesale, bool archived, int count)
+        public Product(int id, string name, string description, double priceRetail, double priceWholesale, bool archived, int count)
         {
             this.id = id;
             this.name = name;
