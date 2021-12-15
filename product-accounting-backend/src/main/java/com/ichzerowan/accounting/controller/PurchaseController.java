@@ -79,6 +79,8 @@ public class PurchaseController {
 
             for(PurchaseProduct purchaseProduct: purchase.getProducts()) {
                 Product product = purchaseProduct.getProduct();
+                if(product.isArchived())
+                    throw new ObjectArchivedException(Product.class, product.getId());
                 if(product.getCount() < purchaseProduct.getCount()){
                     throw new OutOfStockException(product.getId(), purchaseProduct.getCount(), product.getCount());
                 }
@@ -88,6 +90,8 @@ public class PurchaseController {
 
             Coupon coupon = purchase.getCoupon();
             if(coupon != null){
+                if(coupon.isArchived())
+                    throw new ObjectArchivedException(Coupon.class, coupon.getId());
                 coupon.setCount(coupon.getCount() - 1);
                 couponRepository.save(coupon);
             }

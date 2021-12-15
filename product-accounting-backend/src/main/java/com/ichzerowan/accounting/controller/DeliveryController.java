@@ -72,11 +72,16 @@ public class DeliveryController {
             if(delivery.isCompleted())
                 throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
 
+            if(delivery.getSupplier().isArchived())
+                throw new ObjectArchivedException(Supplier.class, delivery.getSupplier().getId());
+
             if(delivery.getProducts().size() == 0)
                 throw new EmptyTransactionException(Delivery.class, delivery.getId());
 
             for(DeliveryProduct deliveryProduct: delivery.getProducts()) {
                 Product product = deliveryProduct.getProduct();
+                if(product.isArchived())
+                    throw new ObjectArchivedException(Product.class, product.getId());
                 product.setCount(product.getCount() + deliveryProduct.getCount());
                 productRepository.save(product);
             }
