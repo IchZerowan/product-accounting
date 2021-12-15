@@ -330,7 +330,7 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                                 <Button x:Name="addProductToDelivery" Click="addProductToPurchase_Click" Uid="{Binding id}" Visibility="{Binding addProductButtonVisibility}">Add product</Button>
-                                <Button x:Name="commitDeliveryDelivery" Click="commitDeliveryPurchase_Click" Uid="{Binding id}" Visibility="{Binding addProductButtonVisibility}">CommitDelivery</Button>
+                                <Button x:Name="commitDeliveryDelivery" Click="commitDeliveryPurchase_Click" Uid="{Binding id}" Visibility="{Binding addProductButtonVisibility}">Commit purchase</Button>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

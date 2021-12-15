@@ -19,13 +19,21 @@ namespace product_accounting_frontend.dao
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/" + id);
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(response.StatusCode.ToString());
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 return false;
-            }
-            return true;
+            }            
         }
 
         public async Task<List<Coupon>> executeArchivedGetQuery()
@@ -71,7 +79,15 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/", httpContent);
-            return true;
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(response.StatusCode.ToString());
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         public async Task<bool> executePutQuery(int id, Coupon coupon)
@@ -83,7 +99,15 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/" + id + @"/add", httpContent);
-            return true;
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(response.StatusCode.ToString());
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

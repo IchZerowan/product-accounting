@@ -19,6 +19,10 @@ namespace product_accounting_frontend.dao
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/" + id);
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(response.StatusCode.ToString());
+                }
             }
             catch (Exception ex)
             {
@@ -71,7 +75,14 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/", httpContent);
-            return true;
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(response.StatusCode.ToString());
+                return false;
+            } else
+            {
+                return true;
+            }            
         }
 
         public async Task<bool> executePutQuery(int id, Supplier supplier)
@@ -83,7 +94,15 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/" + id, httpContent);
-            return true;
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show(response.StatusCode.ToString());
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
