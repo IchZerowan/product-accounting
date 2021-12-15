@@ -23,8 +23,8 @@ namespace product_accounting_frontend
         public List<Coupon> coupons;
         public MainWindow()
         {
-            InitializeComponent();
-        }        
+            InitializeComponent();            
+        }             
 
         private async void products_Click(object sender, RoutedEventArgs e)
         {
