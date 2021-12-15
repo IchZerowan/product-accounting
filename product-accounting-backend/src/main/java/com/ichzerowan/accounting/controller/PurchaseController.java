@@ -2,6 +2,7 @@ package com.ichzerowan.accounting.controller;
 
 import com.ichzerowan.accounting.dao.*;
 import com.ichzerowan.accounting.model.coupon.Coupon;
+import com.ichzerowan.accounting.model.delivery.Delivery;
 import com.ichzerowan.accounting.model.product.Product;
 import com.ichzerowan.accounting.model.purchase.*;
 import com.ichzerowan.accounting.model.transaction.Transaction;
@@ -72,6 +73,9 @@ public class PurchaseController {
         return repository.findById(id).map(purchase -> {
             if(purchase.isCompleted())
                 throw new ModificationNotAllowedException(Purchase.class, purchase.getId());
+
+            if(purchase.getProducts().size() == 0)
+                throw new EmptyTransactionException(Purchase.class, purchase.getId());
 
             for(PurchaseProduct purchaseProduct: purchase.getProducts()) {
                 Product product = purchaseProduct.getProduct();

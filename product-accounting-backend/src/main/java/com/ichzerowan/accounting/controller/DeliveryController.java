@@ -72,6 +72,9 @@ public class DeliveryController {
             if(delivery.isCompleted())
                 throw new ModificationNotAllowedException(Delivery.class, delivery.getId());
 
+            if(delivery.getProducts().size() == 0)
+                throw new EmptyTransactionException(Delivery.class, delivery.getId());
+
             for(DeliveryProduct deliveryProduct: delivery.getProducts()) {
                 Product product = deliveryProduct.getProduct();
                 product.setCount(product.getCount() + deliveryProduct.getCount());
