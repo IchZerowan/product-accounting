@@ -19,6 +19,7 @@
             <Button x:Name="committedDeliveriesBtn" Click="committedDeliveriesBtn_Click">Commited delivery</Button>
             <Button x:Name="purchaseBtn" Click="purchaseBtn_Click">Purchases</Button>
             <Button x:Name="commitedPurchaseBtn" Click="commitedPurchaseBtn_Click">Commited purchases</Button>
+            <Button x:Name="transactionsBtn" Click="transactionsBtn_Click">Transaction</Button>
         </StackPanel>
         <ScrollViewer Margin="200,0,0,0">
             <StackPanel x:Name="MainPanel">
@@ -331,6 +332,26 @@
                                 </ListBox>
                                 <Button x:Name="addProductToDelivery" Click="addProductToPurchase_Click" Uid="{Binding id}" Visibility="{Binding addProductButtonVisibility}">Add product</Button>
                                 <Button x:Name="commitDeliveryDelivery" Click="commitDeliveryPurchase_Click" Uid="{Binding id}" Visibility="{Binding addProductButtonVisibility}">Commit purchase</Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <ListBox x:Name="transactionsView" HorizontalAlignment="Stretch" Visibility="Collapsed">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Vertical">
+                                    <Label FontSize="10" Content="Type:"/>
+                                    <TextBlock Text="{Binding type}" Visibility="Visible"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <Label FontSize="10" Content="Amount:"/>
+                                    <TextBlock Text="{Binding amount}" Visibility="Visible"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Vertical">
+                                    <Label FontSize="10" Content="Date:"/>
+                                    <TextBlock Text="{Binding date}" Visibility="Visible"/>
+                                </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

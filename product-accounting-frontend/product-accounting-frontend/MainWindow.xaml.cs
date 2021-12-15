@@ -23,6 +23,7 @@ namespace product_accounting_frontend
         public List<Coupon> coupons;
         public List<Delivery> deliveries;
         public List<Purchase> purchases;
+        public List<Transaction> transactions;
         public MainWindow()
         {            
             InitializeComponent();            
@@ -40,6 +41,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             ProductDAO productDAO = new ProductDAO();
             products = Task.Run(productDAO.executeGetQuery).Result;
             productsView.ItemsSource = products;
@@ -153,6 +155,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             ProductDAO productDAO = new ProductDAO();
             products = Task.Run(productDAO.executeArchivedGetQuery).Result;
             foreach(Product product in products)
@@ -174,6 +177,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             SupplierDAO supplierDAO = new SupplierDAO();
             suppliers = Task.Run(supplierDAO.executeGetQuery).Result;            
             suppliersView.ItemsSource = suppliers;
@@ -191,6 +195,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             SupplierDAO supplierDAO = new SupplierDAO();
             suppliers = Task.Run(supplierDAO.executeArchivedGetQuery).Result;
             foreach (Supplier supplier in suppliers)
@@ -382,6 +387,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Visible;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             CouponDAO couponDAO = new CouponDAO();
             coupons = Task.Run(couponDAO.executeArchivedGetQuery).Result;
             foreach (Coupon coupon in coupons)
@@ -403,6 +409,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Visible;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             CouponDAO couponDAO = new CouponDAO();
             coupons = Task.Run(couponDAO.executeGetQuery).Result;
             couponsView.ItemsSource = coupons;
@@ -420,6 +427,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Visible;
+            transactionsView.Visibility = Visibility.Collapsed;
             DeliveryDAO deliveryDAO = new DeliveryDAO();
             deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
             foreach(Delivery delivery in deliveries)
@@ -624,6 +632,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Collapsed;
             deliveriesView.Visibility = Visibility.Visible;
+            transactionsView.Visibility = Visibility.Collapsed;
             DeliveryDAO deliveryDAO = new DeliveryDAO();
             deliveries = Task.Run(deliveryDAO.executeCommitedGetQuery).Result;
             foreach (Delivery delivery in deliveries)
@@ -655,6 +664,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Visible;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             PurchaseDAO purchaseDAO = new PurchaseDAO();
             purchases = await purchaseDAO.executeGetQuery();
             foreach (Purchase purchase in purchases)
@@ -825,6 +835,7 @@ namespace product_accounting_frontend
             couponsView.Visibility = Visibility.Collapsed;
             purchasesView.Visibility = Visibility.Visible;
             deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Collapsed;
             PurchaseDAO purchaseDAO = new PurchaseDAO();
             purchases = Task.Run(purchaseDAO.executeCommitedGetQuery).Result;
             foreach (Purchase purchase in purchases)
@@ -840,6 +851,24 @@ namespace product_accounting_frontend
                 }
             }
             purchasesView.ItemsSource = purchases;
+        }
+
+        private async void transactionsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addProductButton.Visibility = Visibility.Collapsed;
+            addSupplierButton.Visibility = Visibility.Collapsed;
+            addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Collapsed;
+            addPurchaseButton.Visibility = Visibility.Collapsed;
+            suppliersView.Visibility = Visibility.Collapsed;
+            productsView.Visibility = Visibility.Collapsed;
+            couponsView.Visibility = Visibility.Collapsed;
+            purchasesView.Visibility = Visibility.Collapsed;
+            deliveriesView.Visibility = Visibility.Collapsed;
+            transactionsView.Visibility = Visibility.Visible;
+            TransactionsDAO transactionDAO = new TransactionsDAO();
+            transactions = await transactionDAO.executeGetTransaction();
+            transactionsView.ItemsSource = transactions;
         }
     }
 }
