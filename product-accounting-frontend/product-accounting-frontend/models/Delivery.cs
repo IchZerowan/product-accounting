@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace product_accounting_frontend.models
 {
-    public class Delivery
+    public class Delivery : EntityBase
     {
         [JsonProperty("date")]
         public string date { get; set; }
@@ -22,13 +23,16 @@ namespace product_accounting_frontend.models
         [JsonProperty("completed")]
         public bool completed { get; set; }
 
+        
+
         public Delivery()
         {
 
         }
 
-        public Delivery(string date, double shippingCost, Supplier supplier, List<DeliveryProduct> products, double total, bool completed)
+        public Delivery(int id, string date, double shippingCost, Supplier supplier, List<DeliveryProduct> products, double total, bool completed)
         {
+            this.id = id;
             this.date = date;
             this.shippingCost = shippingCost;
             this.supplier = supplier;
@@ -36,5 +40,18 @@ namespace product_accounting_frontend.models
             this.total = total;
             this.completed = completed;
         }
+        
+        [JsonIgnore]
+        public Visibility isEditSuppliersButtonsVisible { get; set; } = Visibility.Visible;
+        [JsonIgnore]
+        public Visibility isAddSuppliersFieldsVisible { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility isEditConfirmationSuppliersButtonsVisible { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility isAddSuppliersButtonsVisible { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility isViewSuppliersFieldsVisible { get; set; } = Visibility.Visible;
+        [JsonIgnore]
+        public Visibility addProductButtonVisibility { get; set; } = Visibility.Visible;
     }
 }

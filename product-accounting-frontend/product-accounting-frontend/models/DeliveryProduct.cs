@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace product_accounting_frontend.models
 {
@@ -15,6 +16,8 @@ namespace product_accounting_frontend.models
         public int count { get; set; }
         [JsonProperty("price")]
         public double price { get; set; }
+        [JsonIgnore]
+        public int parentId { get; set; }
 
         public DeliveryProduct()
         {
@@ -27,5 +30,17 @@ namespace product_accounting_frontend.models
             this.count = count;
             this.price = price;
         }
+
+        [JsonIgnore]
+        public Visibility productInfoVisibility { get; set; } = Visibility.Visible;
+        [JsonIgnore]
+        public Visibility productAddByIdVisibility { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility confirmProductVisibility { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility discardProductVisibility { get; set; } = Visibility.Collapsed;
+        [JsonIgnore]
+        public Visibility removeProductVisibility { get; set; } = Visibility.Visible;
+        
     }
 }

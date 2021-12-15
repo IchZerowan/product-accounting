@@ -18,7 +18,7 @@ namespace product_accounting_frontend.models
         [JsonProperty("archived")]
         public bool archived { get; set; }       
 
-        Supplier()
+        public Supplier()
         {
 
         }
@@ -30,5 +30,7 @@ namespace product_accounting_frontend.models
             this.phone = phone;
             this.archived = archived;
         }
+
+        
     }
 }

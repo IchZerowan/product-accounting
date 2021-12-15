@@ -21,6 +21,7 @@ namespace product_accounting_frontend
         public List<Product> products;
         public List<Supplier> suppliers;
         public List<Coupon> coupons;
+        public List<Delivery> deliveries;
         public MainWindow()
         {
             InitializeComponent();            
@@ -30,9 +31,12 @@ namespace product_accounting_frontend
         {
             suppliersView.Visibility = Visibility.Collapsed;
             productsView.Visibility = Visibility.Visible;
+            couponsView.Visibility = Visibility.Collapsed;
+            deliveriesView.Visibility = Visibility.Collapsed;
             addProductButton.Visibility = Visibility.Visible;
             addSupplierButton.Visibility = Visibility.Collapsed;
-            addCouponButton.Visibility = Visibility.Collapsed; 
+            addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Collapsed;
             ProductDAO productDAO = new ProductDAO();
             products = Task.Run(productDAO.executeGetQuery).Result;
             productsView.ItemsSource = products;
@@ -138,9 +142,12 @@ namespace product_accounting_frontend
         {
             suppliersView.Visibility = Visibility.Collapsed;
             productsView.Visibility = Visibility.Visible;
+            couponsView.Visibility = Visibility.Collapsed;
+            deliveriesView.Visibility = Visibility.Collapsed;
             addProductButton.Visibility = Visibility.Collapsed;
             addSupplierButton.Visibility = Visibility.Collapsed;
             addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Collapsed;
             ProductDAO productDAO = new ProductDAO();
             products = Task.Run(productDAO.executeArchivedGetQuery).Result;
             foreach(Product product in products)
@@ -155,8 +162,11 @@ namespace product_accounting_frontend
             addProductButton.Visibility = Visibility.Collapsed;
             addSupplierButton.Visibility = Visibility.Visible;
             addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Collapsed;
             suppliersView.Visibility = Visibility.Visible;
             productsView.Visibility = Visibility.Collapsed;
+            couponsView.Visibility = Visibility.Collapsed;
+            deliveriesView.Visibility = Visibility.Collapsed;
             SupplierDAO supplierDAO = new SupplierDAO();
             suppliers = Task.Run(supplierDAO.executeGetQuery).Result;            
             suppliersView.ItemsSource = suppliers;
@@ -167,8 +177,11 @@ namespace product_accounting_frontend
             addProductButton.Visibility = Visibility.Collapsed;
             addSupplierButton.Visibility = Visibility.Collapsed;
             addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Collapsed;
             suppliersView.Visibility = Visibility.Visible;
             productsView.Visibility = Visibility.Collapsed;
+            couponsView.Visibility = Visibility.Collapsed;
+            deliveriesView.Visibility = Visibility.Collapsed;
             SupplierDAO supplierDAO = new SupplierDAO();
             suppliers = Task.Run(supplierDAO.executeArchivedGetQuery).Result;
             foreach (Supplier supplier in suppliers)
@@ -353,9 +366,11 @@ namespace product_accounting_frontend
             addProductButton.Visibility = Visibility.Collapsed;
             addSupplierButton.Visibility = Visibility.Collapsed;
             addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Collapsed;
             suppliersView.Visibility = Visibility.Collapsed;
             productsView.Visibility = Visibility.Collapsed;
             couponsView.Visibility = Visibility.Visible;
+            deliveriesView.Visibility = Visibility.Collapsed;
             CouponDAO couponDAO = new CouponDAO();
             coupons = Task.Run(couponDAO.executeArchivedGetQuery).Result;
             foreach (Coupon coupon in coupons)
@@ -370,12 +385,243 @@ namespace product_accounting_frontend
             addProductButton.Visibility = Visibility.Collapsed;
             addSupplierButton.Visibility = Visibility.Collapsed;
             addCouponButton.Visibility = Visibility.Visible;
+            addDeliveryButton.Visibility = Visibility.Collapsed;
             suppliersView.Visibility = Visibility.Collapsed;
             productsView.Visibility = Visibility.Collapsed;
             couponsView.Visibility = Visibility.Visible;
+            deliveriesView.Visibility = Visibility.Collapsed;
             CouponDAO couponDAO = new CouponDAO();
             coupons = Task.Run(couponDAO.executeGetQuery).Result;
             couponsView.ItemsSource = coupons;
+        }
+
+        private async void deliveriesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addProductButton.Visibility = Visibility.Collapsed;
+            addSupplierButton.Visibility = Visibility.Collapsed;
+            addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Visible;
+            suppliersView.Visibility = Visibility.Collapsed;
+            productsView.Visibility = Visibility.Collapsed;
+            couponsView.Visibility = Visibility.Collapsed;
+            deliveriesView.Visibility = Visibility.Visible;
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            foreach(Delivery delivery in deliveries)
+            {
+               foreach(DeliveryProduct deliveryProduct in delivery.products)
+                {
+                    deliveryProduct.parentId = delivery.id;
+                } 
+            }
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private async void DeleteDeliveryButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            if (await deliveryDAO.executeDeleteQuery(Int32.Parse(button.Uid)))
+            {
+                deliveries.Remove(deliveries.Find(delivery => delivery.id.ToString() == button.Uid));
+            }
+            deliveriesView.Items.Refresh();
+        }
+
+        private async void EditDeliveryButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            delivery.isAddButtonsVisible = Visibility.Collapsed;
+            delivery.isEditingButtonsVisible = Visibility.Visible;
+            delivery.isViewButtonsVisible = Visibility.Collapsed;
+            deliveriesView.Items.Refresh();
+        }
+
+        private async void EditDeliverySupplierButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            delivery.isEditConfirmationSuppliersButtonsVisible = Visibility.Visible;
+            delivery.isViewSuppliersFieldsVisible = Visibility.Collapsed;
+            delivery.isEditSuppliersButtonsVisible = Visibility.Collapsed;
+            delivery.isAddSuppliersFieldsVisible = Visibility.Visible;
+            deliveriesView.Items.Refresh();
+        }
+
+        private async void ReplaceSupplierButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            await deliveryDAO.executePutQuery(delivery.id, delivery);
+            deliveries.Clear();
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private async void DiscardNewSupplierButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            delivery.isEditConfirmationSuppliersButtonsVisible = Visibility.Collapsed;
+            delivery.isViewSuppliersFieldsVisible = Visibility.Visible;
+            delivery.isEditSuppliersButtonsVisible = Visibility.Visible;
+            delivery.isAddSuppliersFieldsVisible = Visibility.Collapsed;
+            deliveriesView.Items.Refresh();
+        }
+
+
+        private async void AcceptDeliveryButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            await deliveryDAO.executePutQuery(delivery.id, delivery);
+            deliveries.Clear();
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private async void DiscardDeliveryButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            deliveries.Clear();
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private async void AcceptDeliveryAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            addDeliveryButton.Visibility = Visibility.Visible;
+            Button button = sender as Button;
+            int selectedDeliveryIndex = deliveries.FindIndex(delivery => delivery.id.ToString() == button.Uid);
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            await deliveryDAO.executePostQuery(deliveries[selectedDeliveryIndex]);
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private async void DiscardDeliveryAddButton_Click(object sender, RoutedEventArgs e)
+        {
+            addDeliveryButton.Visibility = Visibility.Visible;
+            deliveries.Remove(deliveries[deliveries.Count - 1]);
+            deliveriesView.Items.Refresh();
+        }
+
+        private void addDeliveryButton_Click(object sender, RoutedEventArgs e)
+        {
+            addDeliveryButton.Visibility = Visibility.Collapsed;
+            deliveries.Add(new Delivery(0, "", 0.0, new Supplier(0, "", "", false), null, 0.0, false));
+            deliveries[deliveries.Count - 1].isAddSuppliersButtonsVisible = Visibility.Visible;
+            deliveries[deliveries.Count - 1].isViewSuppliersFieldsVisible = Visibility.Collapsed;
+            deliveries[deliveries.Count - 1].isAddSuppliersFieldsVisible = Visibility.Visible;
+            deliveries[deliveries.Count - 1].isEditSuppliersButtonsVisible = Visibility.Collapsed;
+            deliveriesView.Items.Refresh();
+            AddAnonymousObject(deliveries[deliveries.Count - 1]);
+            deliveriesView.Items.Refresh();
+        }
+
+        private void addProductToDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            delivery.products.Add(new DeliveryProduct(new Product(0, "", "", 0, 0, false, 0), 0 , 0));
+            delivery.products[delivery.products.Count - 1].parentId = delivery.id;
+            delivery.products[delivery.products.Count - 1].productInfoVisibility = Visibility.Collapsed;
+            delivery.products[delivery.products.Count - 1].productAddByIdVisibility = Visibility.Visible;
+            delivery.products[delivery.products.Count - 1].confirmProductVisibility = Visibility.Visible;
+            delivery.products[delivery.products.Count - 1].discardProductVisibility = Visibility.Visible;
+            delivery.products[delivery.products.Count - 1].removeProductVisibility = Visibility.Collapsed;
+            delivery.addProductButtonVisibility = Visibility.Collapsed;
+            deliveriesView.Items.Refresh();
+        }
+
+        private async void removeProductFromDeliveryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            int productId = Int32.Parse(button.Uid);
+            StackPanel stackPanel = button.Parent as StackPanel;
+            int deliveryId = Int32.Parse(stackPanel.Uid);
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == stackPanel.Uid);
+            delivery.products.Remove(delivery.products.Find(product => product.product.id.ToString() == button.Uid));
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            await deliveryDAO.executeDeleteProductQuery(deliveryId, productId);
+            deliveries.Clear();
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            foreach (Delivery deliveri in deliveries)
+            {
+                foreach (DeliveryProduct deliveryProduct in deliveri.products)
+                {
+                    deliveryProduct.parentId = deliveri.id;
+                }
+            }
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private async void confirmProductFromDeliveryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            deliveriesView.Items.Refresh();
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            delivery.products[delivery.products.Count - 1].productInfoVisibility = Visibility.Visible;
+            delivery.products[delivery.products.Count - 1].productAddByIdVisibility = Visibility.Collapsed;
+            delivery.products[delivery.products.Count - 1].confirmProductVisibility = Visibility.Collapsed;
+            delivery.products[delivery.products.Count - 1].discardProductVisibility = Visibility.Collapsed;
+            delivery.products[delivery.products.Count - 1].removeProductVisibility = Visibility.Visible;
+            delivery.addProductButtonVisibility = Visibility.Visible;
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            await deliveryDAO.executePostProductQuery(delivery.id, delivery);
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private void discardProductFromDeliveryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            deliveriesView.Items.Refresh();
+            Button button = sender as Button;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
+            delivery.products.RemoveAt(delivery.products.Count - 1);
+            delivery.addProductButtonVisibility = Visibility.Visible;
+            deliveriesView.Items.Refresh();
+        }
+
+        private async void commitDeliveryDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            await deliveryDAO.executePutCommit(Int32.Parse(button.Uid));
+            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            deliveriesView.ItemsSource = deliveries;
+        }
+
+        private void committedDeliveriesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            addProductButton.Visibility = Visibility.Collapsed;
+            addSupplierButton.Visibility = Visibility.Collapsed;
+            addCouponButton.Visibility = Visibility.Collapsed;
+            addDeliveryButton.Visibility = Visibility.Visible;
+            suppliersView.Visibility = Visibility.Collapsed;
+            productsView.Visibility = Visibility.Collapsed;
+            couponsView.Visibility = Visibility.Collapsed;
+            deliveriesView.Visibility = Visibility.Visible;
+            DeliveryDAO deliveryDAO = new DeliveryDAO();
+            deliveries = Task.Run(deliveryDAO.executeCommitedGetQuery).Result;
+            foreach (Delivery delivery in deliveries)
+            {
+                delivery.isAddButtonsVisible = Visibility.Collapsed;
+                delivery.isEditingButtonsVisible = Visibility.Collapsed;
+                delivery.isViewButtonsVisible = Visibility.Collapsed;
+                delivery.isAddSuppliersButtonsVisible = Visibility.Collapsed;
+                delivery.addProductButtonVisibility = Visibility.Collapsed;
+                delivery.isEditSuppliersButtonsVisible= Visibility.Collapsed; 
+                foreach (DeliveryProduct deliveryProduct in delivery.products)
+                {
+                    deliveryProduct.productAddByIdVisibility = Visibility.Collapsed;
+                    deliveryProduct.removeProductVisibility = Visibility.Collapsed;
+                }
+            }
+            deliveriesView.ItemsSource = deliveries;
         }
     }
 }
