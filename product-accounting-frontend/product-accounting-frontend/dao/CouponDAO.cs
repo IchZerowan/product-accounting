@@ -21,7 +21,9 @@ namespace product_accounting_frontend.dao
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/" + id);
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(response.StatusCode.ToString());
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+                    Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                    MessageBox.Show(error.error, error.status);
                     return false;
                 }
                 else
@@ -81,7 +83,9 @@ namespace product_accounting_frontend.dao
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/", httpContent);
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(response.StatusCode.ToString());
+                string responseMessage = await response.Content.ReadAsStringAsync();
+                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                MessageBox.Show(error.error, error.status);
                 return false;
             }
             else
@@ -101,7 +105,9 @@ namespace product_accounting_frontend.dao
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/" + id + @"/add", httpContent);
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(response.StatusCode.ToString());
+                string responseMessage = await response.Content.ReadAsStringAsync();
+                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                MessageBox.Show(error.error, error.status);
                 return false;
             }
             else

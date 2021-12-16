@@ -21,7 +21,14 @@ namespace product_accounting_frontend.dao
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/" + id);
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(response.StatusCode.ToString());
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+                    Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                    MessageBox.Show(error.error, error.status);
+                    return false;
+                }
+                else
+                {
+                    return true;
                 }
             }
             catch (Exception ex)
@@ -29,7 +36,6 @@ namespace product_accounting_frontend.dao
                 MessageBox.Show(ex.Message);
                 return false;
             }
-            return true;
         }
 
         public async Task<List<Supplier>> executeArchivedGetQuery()
@@ -77,12 +83,15 @@ namespace product_accounting_frontend.dao
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/", httpContent);
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(response.StatusCode.ToString());
+                string responseMessage = await response.Content.ReadAsStringAsync();
+                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                MessageBox.Show(error.error, error.status);
                 return false;
-            } else
+            }
+            else
             {
                 return true;
-            }            
+            }
         }
 
         public async Task<bool> executePutQuery(int id, Supplier supplier)
@@ -96,7 +105,9 @@ namespace product_accounting_frontend.dao
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/" + id, httpContent);
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(response.StatusCode.ToString());
+                string responseMessage = await response.Content.ReadAsStringAsync();
+                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                MessageBox.Show(error.error, error.status);
                 return false;
             }
             else

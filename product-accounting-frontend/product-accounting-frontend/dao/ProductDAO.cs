@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using product_accounting_frontend.models;
 
 namespace product_accounting_frontend.dao
 {
@@ -23,7 +24,9 @@ namespace product_accounting_frontend.dao
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/products/" + id, httpContent);
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(response.StatusCode.ToString());
+                string responseMessage = await response.Content.ReadAsStringAsync();
+                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                MessageBox.Show(error.error, error.status);
                 return false;
             }
             else
@@ -40,7 +43,9 @@ namespace product_accounting_frontend.dao
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/products/" + id);
                 if (!response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(response.StatusCode.ToString());
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+                    Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                    MessageBox.Show(error.error, error.status);
                     return false;
                 }
                 else
@@ -100,7 +105,9 @@ namespace product_accounting_frontend.dao
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/products/", httpContent);
             if (!response.IsSuccessStatusCode)
             {
-                MessageBox.Show(response.StatusCode.ToString());
+                string responseMessage = await response.Content.ReadAsStringAsync();
+                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
+                MessageBox.Show(error.error, error.status);
                 return false;
             }
             else
