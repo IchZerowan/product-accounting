@@ -2,7 +2,6 @@
 using product_accounting_frontend.models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,17 +17,7 @@ namespace product_accounting_frontend.dao
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/purchases/" + id);
-                if (!response.IsSuccessStatusCode)
-                {
-                    string responseMessage = await response.Content.ReadAsStringAsync();
-                    Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                    MessageBox.Show(error.error, error.status);
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return await ErrorHandler.handleEror(response);
             }
             catch (Exception ex)
             {
@@ -80,17 +69,7 @@ namespace product_accounting_frontend.dao
                 + "\"}";
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/purchases", httpContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
 
         public async Task<bool> executePutQuery(int id, Purchase purchase)
@@ -104,17 +83,7 @@ namespace product_accounting_frontend.dao
                 + "\"}";
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/purchases/" + id, httpContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
 
         public async Task<bool> executePostProductQuery(int id, Purchase purchase)
@@ -128,17 +97,7 @@ namespace product_accounting_frontend.dao
                 + "}";
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/purchases/" + purchase.id + @"/products", httpContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
 
         public async Task<bool> executePutCommit(int id)
@@ -146,17 +105,7 @@ namespace product_accounting_frontend.dao
             HttpClient client = new HttpClient();
 
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/purchases/" + id + @"/commit", null);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
 
         public async Task<bool> executeDeleteProductQuery(int id, int productId)
@@ -165,17 +114,7 @@ namespace product_accounting_frontend.dao
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/purchases/" + id + @"/products/" + productId);
-                if (!response.IsSuccessStatusCode)
-                {
-                    string responseMessage = await response.Content.ReadAsStringAsync();
-                    Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                    MessageBox.Show(error.error, error.status);
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return await ErrorHandler.handleEror(response);
             }
             catch (Exception ex)
             {

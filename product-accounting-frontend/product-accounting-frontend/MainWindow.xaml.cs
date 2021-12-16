@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Net;
-using System.Net.Http;
-using System.IO;
-using Newtonsoft.Json;
 using product_accounting_frontend.dao;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Media;
 using product_accounting_frontend.models;
 
 namespace product_accounting_frontend

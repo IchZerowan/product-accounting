@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using product_accounting_frontend.models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,17 +18,7 @@ namespace product_accounting_frontend.dao
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/" + id);
-                if (!response.IsSuccessStatusCode)
-                {
-                    string responseMessage = await response.Content.ReadAsStringAsync();
-                    Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                    MessageBox.Show(error.error, error.status);
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return await ErrorHandler.handleEror(response);
             }
             catch (Exception ex)
             {
@@ -81,17 +70,7 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/", httpContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
 
         public async Task<bool> executePutQuery(int id, Coupon coupon)
@@ -103,17 +82,7 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/coupons/" + id + @"/add", httpContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
     }
 }
