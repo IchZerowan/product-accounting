@@ -870,5 +870,67 @@ namespace product_accounting_frontend
             transactions = await transactionDAO.executeGetTransaction();
             transactionsView.ItemsSource = transactions;
         }
+
+        private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)sender;
+            string day;
+            string month;
+            if(datePicker.SelectedDate.Value.Day.ToString().Length == 1)
+            {
+                day = "0" + datePicker.SelectedDate.Value.Day.ToString();
+            }
+            else
+            {
+                day = datePicker.SelectedDate.Value.Day.ToString();
+            }
+
+            if (datePicker.SelectedDate.Value.Month.ToString().Length == 1)
+            {
+                month = "0" + datePicker.SelectedDate.Value.Month.ToString();
+            }
+            else
+            {
+                month = datePicker.SelectedDate.Value.Month.ToString();
+            }
+
+            string date = datePicker.SelectedDate.Value.Year.ToString() + "-" 
+                + month + "-"
+                + day;
+            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == datePicker.Uid);
+            delivery.date = date;
+            datePicker.Text = date;
+        }
+
+        private void DatePickerPurchase_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)sender;
+            string day;
+            string month;
+            if (datePicker.SelectedDate.Value.Day.ToString().Length == 1)
+            {
+                day = "0" + datePicker.SelectedDate.Value.Day.ToString();
+            }
+            else
+            {
+                day = datePicker.SelectedDate.Value.Day.ToString();
+            }
+
+            if (datePicker.SelectedDate.Value.Month.ToString().Length == 1)
+            {
+                month = "0" + datePicker.SelectedDate.Value.Month.ToString();
+            }
+            else
+            {
+                month = datePicker.SelectedDate.Value.Month.ToString();
+            }
+
+            string date = datePicker.SelectedDate.Value.Year.ToString() + "-"
+                + month + "-"
+                + day;
+            Purchase purchase = purchases.Find(purchase => purchase.id.ToString() == datePicker.Uid);
+            purchase.date = date;
+            datePicker.Text = date;
+        }
     }
 }

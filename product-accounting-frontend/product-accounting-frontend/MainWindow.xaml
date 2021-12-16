@@ -165,8 +165,8 @@
                                     <StackPanel Orientation="Vertical">
                                         <Label FontSize="10" Content="Delivery date:"/>
                                         <TextBlock Text="{Binding date}" Visibility="{Binding isViewButtonsVisible}"/>
-                                        <TextBox Text="{Binding date}" Visibility="{Binding isEditingButtonsVisible}"/>
-                                        <TextBox Text="{Binding date}" Visibility="{Binding isAddButtonsVisible}"/>
+                                            <DatePicker Uid="{Binding id}" SelectedDateFormat="Short" SelectedDate="{Binding date, StringFormat=d}" Visibility="{Binding isEditingButtonsVisible}" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+                                            <DatePicker Uid="{Binding id}" SelectedDateFormat="Short" SelectedDate="{Binding date, StringFormat=d}" Visibility="{Binding isAddButtonsVisible}" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Vertical">
                                         <Label FontSize="10" Content="Shipping cost:"/>
@@ -272,8 +272,8 @@
                                     <StackPanel Orientation="Vertical">
                                         <Label FontSize="10" Content="Date:"/>
                                         <TextBlock Text="{Binding date}" Visibility="{Binding isViewFieldsVisible}"/>
-                                        <TextBox Text="{Binding date}" Visibility="{Binding isEditingFieldsVisible}"/>
-                                        <TextBox Text="{Binding date}" Visibility="{Binding isAddFieldsVisible}"/>
+                                        <DatePicker Uid="{Binding id}" SelectedDateFormat="Short" SelectedDate="{Binding date, StringFormat=d}" Visibility="{Binding isEditingButtonsVisible}" SelectedDateChanged="DatePickerPurchase_SelectedDateChanged"/>
+                                        <DatePicker Uid="{Binding id}" SelectedDateFormat="Short" SelectedDate="{Binding date, StringFormat=d}" Visibility="{Binding isAddButtonsVisible}" SelectedDateChanged="DatePickerPurchase_SelectedDateChanged"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Vertical">
                                         <Label FontSize="10" Content="Coupon:"/>
