@@ -18,17 +18,7 @@ namespace product_accounting_frontend.dao
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.DeleteAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/" + id);
-                if (!response.IsSuccessStatusCode)
-                {
-                    string responseMessage = await response.Content.ReadAsStringAsync();
-                    Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                    MessageBox.Show(error.error, error.status);
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
+                return await ErrorHandler.handleEror(response);
             }
             catch (Exception ex)
             {
@@ -80,17 +70,7 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/", httpContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
 
         public async Task<bool> executePutQuery(int id, Supplier supplier)
@@ -102,17 +82,7 @@ namespace product_accounting_frontend.dao
             string jsonString = jObject.ToString();
             HttpContent httpContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PutAsync(@"http://product-accounting.us-east-2.elasticbeanstalk.com/suppliers/" + id, httpContent);
-            if (!response.IsSuccessStatusCode)
-            {
-                string responseMessage = await response.Content.ReadAsStringAsync();
-                Error error = JsonConvert.DeserializeObject<Error>(responseMessage);
-                MessageBox.Show(error.error, error.status);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await ErrorHandler.handleEror(response);
         }
     }
 }

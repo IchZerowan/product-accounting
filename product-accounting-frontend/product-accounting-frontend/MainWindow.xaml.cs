@@ -543,6 +543,7 @@ namespace product_accounting_frontend
 
         private void addProductToDelivery_Click(object sender, RoutedEventArgs e)
         {
+            
             Button button = sender as Button;
             Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == button.Uid);
             delivery.products.Add(new DeliveryProduct(new Product(0, "", "", 0, 0, false, 0), 0 , 0));
@@ -553,30 +554,29 @@ namespace product_accounting_frontend
             delivery.products[delivery.products.Count - 1].discardProductVisibility = Visibility.Visible;
             delivery.products[delivery.products.Count - 1].removeProductVisibility = Visibility.Collapsed;
             delivery.addProductButtonVisibility = Visibility.Visible;
-            
             deliveriesView.Items.Refresh();
         }
 
         private async void removeProductFromDeliveryBtn_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            int productId = Int32.Parse(button.Uid);
-            StackPanel stackPanel = button.Parent as StackPanel;
-            int deliveryId = Int32.Parse(stackPanel.Uid);
-            Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == stackPanel.Uid);
-            delivery.products.Remove(delivery.products.Find(product => product.product.id.ToString() == button.Uid));
-            DeliveryDAO deliveryDAO = new DeliveryDAO();
-            await deliveryDAO.executeDeleteProductQuery(deliveryId, productId);
-            deliveries.Clear();
-            deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
-            foreach (Delivery deliveri in deliveries)
-            {
-                foreach (DeliveryProduct deliveryProduct in deliveri.products)
+                Button button = sender as Button;
+                int productId = Int32.Parse(button.Uid);
+                StackPanel stackPanel = button.Parent as StackPanel;
+                int deliveryId = Int32.Parse(stackPanel.Uid);
+                Delivery delivery = deliveries.Find(delivery => delivery.id.ToString() == stackPanel.Uid);
+                delivery.products.Remove(delivery.products.Find(product => product.product.id.ToString() == button.Uid));
+                DeliveryDAO deliveryDAO = new DeliveryDAO();
+                await deliveryDAO.executeDeleteProductQuery(deliveryId, productId);
+                deliveries.Clear();
+                deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+                foreach (Delivery deliveri in deliveries)
                 {
-                    deliveryProduct.parentId = deliveri.id;
+                    foreach (DeliveryProduct deliveryProduct in deliveri.products)
+                    {
+                        deliveryProduct.parentId = deliveri.id;
+                    }
                 }
-            }
-            deliveriesView.ItemsSource = deliveries;
+                deliveriesView.ItemsSource = deliveries;                          
         }
 
         private async void confirmProductFromDeliveryBtn_Click(object sender, RoutedEventArgs e)
@@ -591,8 +591,16 @@ namespace product_accounting_frontend
             delivery.products[delivery.products.Count - 1].removeProductVisibility = Visibility.Visible;
             delivery.addProductButtonVisibility = Visibility.Visible;
             DeliveryDAO deliveryDAO = new DeliveryDAO();
-            await deliveryDAO.executePostProductQuery(delivery.id, delivery);
+            await deliveryDAO.executePostProductQuery(delivery.id, delivery);            
+            deliveries.Clear();
             deliveries = Task.Run(deliveryDAO.executeGetQuery).Result;
+            foreach (Delivery deliveri in deliveries)
+            {
+                foreach (DeliveryProduct deliveryProduct in deliveri.products)
+                {
+                    deliveryProduct.parentId = deliveri.id;
+                }
+            }
             deliveriesView.ItemsSource = deliveries;
         }
 
@@ -688,7 +696,7 @@ namespace product_accounting_frontend
             PurchaseDAO purchaseDAO = new PurchaseDAO();
             if (await purchaseDAO.executeDeleteQuery(Int32.Parse(button.Uid)))
             {
-                deliveries.Remove(deliveries.Find(delivery => delivery.id.ToString() == button.Uid));
+                purchases.Remove(purchases.Find(purchase => purchase.id.ToString() == button.Uid));
             }
             deliveriesView.Items.Refresh();
         }
@@ -757,7 +765,15 @@ namespace product_accounting_frontend
             purchase.addProductButtonVisibility = Visibility.Visible;
             PurchaseDAO purchaseDAO = new PurchaseDAO();
             await purchaseDAO.executePostProductQuery(purchase.id, purchase);
+            purchases.Clear();
             purchases = Task.Run(purchaseDAO.executeGetQuery).Result;
+            foreach (Purchase purchas in purchases)
+            {
+                foreach (DeliveryProduct deliveryProduct in purchas.products)
+                {
+                    deliveryProduct.parentId = purchas.id;
+                }
+            }
             purchasesView.ItemsSource = purchases;
         }
 

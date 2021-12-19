@@ -52,9 +52,7 @@
                                 </StackPanel>
                             <StackPanel Orientation="Vertical">
                                 <Label FontSize="10" Content="Count:"/>
-                                    <TextBlock Text="{Binding count}" Visibility="{Binding isViewFieldsVisible}"/>
-                                    <TextBox Text="{Binding count}" Visibility="{Binding isEditingFieldsVisible}"/>
-                                    <TextBox Text="{Binding count}" Visibility="{Binding isAddFieldsVisible}"/>
+                                    <TextBlock Text="{Binding count}" Visibility="Visible"/>
                                 </StackPanel>
                             <StackPanel Orientation="Vertical" Width="165">
                                 <Label FontSize="10" Content="Description:"/>
@@ -125,13 +123,13 @@
                                 <StackPanel Orientation="Vertical">
                                     <Label FontSize="10" Content="Coupon code:"/>
                                     <TextBlock Text="{Binding code}" Visibility="{Binding isViewFieldsVisible}"/>
-                                    <TextBox Text="{Binding code}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBlock Text="{Binding code}" Visibility="{Binding isEditingFieldsVisible}"/>
                                     <TextBox Text="{Binding code}" Visibility="{Binding isAddFieldsVisible}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical">
                                     <Label FontSize="10" Content="Coupon amount:"/>
                                     <TextBlock Text="{Binding amount}" Visibility="{Binding isViewFieldsVisible}"/>
-                                    <TextBox Text="{Binding amount}" Visibility="{Binding isEditingFieldsVisible}"/>
+                                    <TextBlock Text="{Binding amount}" Visibility="{Binding isEditingFieldsVisible}"/>
                                     <TextBox Text="{Binding amount}" Visibility="{Binding isAddFieldsVisible}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Vertical">
