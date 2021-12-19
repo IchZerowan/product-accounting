@@ -698,7 +698,7 @@ namespace product_accounting_frontend
             {
                 purchases.Remove(purchases.Find(purchase => purchase.id.ToString() == button.Uid));
             }
-            deliveriesView.Items.Refresh();
+            purchasesView.Items.Refresh();
         }
 
         private async void EditPurchaseButton_Click(object sender, RoutedEventArgs e)
