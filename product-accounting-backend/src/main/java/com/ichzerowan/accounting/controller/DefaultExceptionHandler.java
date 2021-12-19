@@ -22,7 +22,8 @@ public class DefaultExceptionHandler {
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler({ModificationNotAllowedException.class, OutOfStockException.class,
-            EmptyTransactionException.class, ObjectArchivedException.class})
+            EmptyTransactionException.class, ObjectArchivedException.class,
+            OutOfCouponsException.class})
     @ResponseBody
     ExceptionInfo handleNotAllowed(HttpServletRequest req, Exception ex) {
         return new ExceptionInfo(405, ex);

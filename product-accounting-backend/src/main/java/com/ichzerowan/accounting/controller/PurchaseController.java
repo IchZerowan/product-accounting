@@ -2,7 +2,6 @@ package com.ichzerowan.accounting.controller;
 
 import com.ichzerowan.accounting.dao.*;
 import com.ichzerowan.accounting.model.coupon.Coupon;
-import com.ichzerowan.accounting.model.delivery.Delivery;
 import com.ichzerowan.accounting.model.product.Product;
 import com.ichzerowan.accounting.model.purchase.*;
 import com.ichzerowan.accounting.model.transaction.Transaction;
@@ -92,6 +91,8 @@ public class PurchaseController {
             if(coupon != null){
                 if(coupon.isArchived())
                     throw new ObjectArchivedException(Coupon.class, coupon.getId());
+                if(coupon.getCount() < 1)
+                    throw new OutOfCouponsException(coupon.getId());
                 coupon.setCount(coupon.getCount() - 1);
                 couponRepository.save(coupon);
             }
